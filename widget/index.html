@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- JS -->
+    <script src="../../../scripts/buildfire.min.js"></script>
+    <script src="../../../scripts/buildfire/services/camera/camera.js"></script>
+    <script async src="opencv.js" type="text/javascript"></script>
+    <script src="./js/imageProcessing.js" type="text/javascript"></script>
+    <script src="index.js" type="text/javascript"></script>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div>
+        <button id='openCameraBtn' class='btn btn-primary'>Open Camera</button>
+    </div>
+    <div>
+        <h2>openCV Test</h2>
+        <div>
+            <h5>Tips:</h5>
+            <div>
+                <p>Saturation Target: 0 to 20</p>
+            </div>
+            <div>
+                <p>Brightness Target: 150 to 230</p>
+            </div>
+            <div>
+                <p>RGB Color Balance (Target: R, G, and B within 20 points of each other)</p>
+            </div>
+
+            <h3>Test Results</h3>
+            <div id="testResults"></div>
+            <div id="colorResults" style="min-width: 100px;height: 50px;"></div>
+        </div>
+    </div>
+
+    <div id="originalImage"></div>
+    <canvas style='width:100%' id='canvasOutput'></canvas>
+    <div id="isBlurry"></div>
+    <div id="extractedColors"></div>
+</body>
+
+</html>
