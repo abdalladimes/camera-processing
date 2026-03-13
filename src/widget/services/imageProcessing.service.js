@@ -1,5 +1,5 @@
 // TODO: FOR READING FROM COORDS, OPENCV NEEDS (y , x) INSTEAD OF (x, y) SO WE NEED TO FLIP THE COORDS BEFORE PASSING THEM TO OPENCV
-window.imageProcessing = {
+export default {
     displayOverlayBoxes: function (imgElement, overlayImageMeasurements) {
         let openCvImage = cv.imread(imgElement);
         cv.GaussianBlur(openCvImage, openCvImage, new cv.Size(5, 5), 0, 0, cv.BORDER_DEFAULT);
@@ -136,7 +136,8 @@ window.imageProcessing = {
         src.delete(); gray.delete(); roi.delete();
         sobelX.delete(); sobelY.delete(); magnitude.delete();
         mean.delete(); stddev.delete();
-        return isBlurry;
+        const isBlurry = variance < threshold;
+        return { isBlurry, variance };
     },
 
     // TODO: this is for UI only
@@ -199,7 +200,7 @@ window.imageProcessing = {
         cv.cvtColor(src, hsv, cv.COLOR_RGBA2RGB);
         cv.cvtColor(hsv, hsv, cv.COLOR_RGB2HSV);
 
-        // 2. Define "Background" (Low Saturation)
+        // 2. Define 'Background' (Low Saturation)
         // H: 0-180 (Any color hue)
         // S: 0-40  (Very low color intensity - ignores the colored squares)
         // V: 0-255 (Any brightness level)
@@ -229,13 +230,139 @@ window.imageProcessing = {
             },
             // The V channel in HSV represents overall brightness on a 0-255 scale
             brightness: Math.round(meanHsv[2]),
-            // The S channel tells you how "pure white/grey" it is (lower is better)
+            // The S channel tells you how 'pure white/grey' it is (lower is better)
             saturation: Math.round(meanHsv[1])
         };
         return results;
     },
 
     rgbToHex: function (r, g, b) {
-        return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1).toUpperCase();
+        return '#' + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1).toUpperCase();
     },
 }
+
+
+
+// TODO: 
+/**
+ The Solution: Euclidean DistanceThink of your colors as points on a 3D graph (where X, Y, and Z are R, G, and B).
+ To find the closest match, we calculate the straight-line distance between your target color and each of your range colors using this formula:
+ $Distance = \sqrt{(R_1 - R_2)^2 + (G_1 - G_2)^2 + (B_1 - B_2)^2}$
+ The range with the lowest distance is your match.Here is how to implement this in code.
+ Since your data structure looks like JavaScript/JSON, here is the JS approach (and the Python equivalent, since OpenCV is heavily used there).
+ */
+
+// using RGB
+function findClosestRange(opencvColorBGR, ranges) {
+    // 1. Convert OpenCV BGR array to RGB object
+    const targetColor = {
+        r: opencvColorBGR[2],
+        g: opencvColorBGR[1],
+        b: opencvColorBGR[0]
+    };
+
+    let closestRange = null;
+    let minDistance = Infinity;
+
+    // 2. Loop through your ranges to find the closest match
+    for (const [key, data] of Object.entries(ranges)) {
+        const refColor = data.color;
+
+        // Calculate Euclidean distance
+        const distance = Math.sqrt(
+            Math.pow(targetColor.r - refColor.r, 2) +
+            Math.pow(targetColor.g - refColor.g, 2) +
+            Math.pow(targetColor.b - refColor.b, 2)
+        );
+
+        // Update if this is the closest one we've seen
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestRange = data;
+        }
+    }
+
+    return closestRange;
+}
+
+// Example usage:
+// const myOpenCVColor = [0, 200, 255]; // A BGR color (Yellow-ish)
+// const result = findClosestRange(myOpenCVColor, ranges);
+// console.log(`The color is in the ${result.interpretation} range.`);
+
+
+// using HSV
+
+// 1. Helper function: Convert RGB to HSV
+function rgbToHsv(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const d = max - min;
+
+    let h = 0;
+    let s = max === 0 ? 0 : d / max;
+    let v = max;
+
+    if (max !== min) {
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    // Return h in 0-360, s and v in 0-1
+    return { h: h * 360, s: s, v: v };
+}
+
+// 2. Main function: Find the closest range using HSV
+function findClosestRangeHSV(opencvColorBGR, ranges) {
+    // Convert OpenCV BGR array to RGB, then to HSV
+    const targetHSV = rgbToHsv(
+        opencvColorBGR[2], // R
+        opencvColorBGR[1], // G
+        opencvColorBGR[0]  // B
+    );
+
+    let closestRange = null;
+    let minDistance = Infinity;
+
+    for (const [key, data] of Object.entries(ranges)) {
+        // Convert the reference color from your ranges to HSV
+        const refHSV = rgbToHsv(data.color.r, data.color.g, data.color.b);
+
+        // Calculate Circular Hue Difference (and normalize it to 0-1 so it matches S and V)
+        let diffH = Math.abs(targetHSV.h - refHSV.h);
+        diffH = Math.min(diffH, 360 - diffH) / 360;
+
+        // Calculate Saturation and Value differences
+        const diffS = targetHSV.s - refHSV.s;
+        const diffV = targetHSV.v - refHSV.v;
+
+        // Calculate 3D Euclidean distance in the normalized HSV space
+        // We multiply diffH by 2 to give the actual color (Hue) slightly more importance 
+        // than brightness/shadows (Value) for the final match.
+        const distance = Math.sqrt(
+            Math.pow(diffH * 2, 2) +
+            Math.pow(diffS, 2) +
+            Math.pow(diffV, 2)
+        );
+
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestRange = data;
+        }
+    }
+
+    return closestRange;
+}
+
+// Example usage:
+// const myOpenCVColor = [30, 150, 10]; // Darkish green BGR from a real photo
+// const result = findClosestRangeHSV(myOpenCVColor, ranges);
+// console.log(`The closest HSV color is in the ${result.interpretation} range.`);

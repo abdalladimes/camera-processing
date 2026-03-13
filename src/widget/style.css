@@ -1,0 +1,86 @@
+:root {
+    --scan-btn-margin-bottom: calc(var(--bf-safe-area-inset-bottom) + 30px);
+}
+
+body {
+    position: relative;
+    padding-top: var(--bf-safe-area-inset-top);
+    padding-bottom: var(--bf-safe-area-inset-bottom);
+}
+
+#scanQRButtonContainer {
+    align-items: center;
+    bottom: var(--scan-btn-margin-bottom);
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+}
+
+#scanQRButton {
+    background: var(--primaryTheme, #3E6A9E);
+    border-radius: 4px;
+    border: none;
+    color: #fff;
+    padding: 10px 55px;
+}
+
+.timer-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 60px;
+}
+
+.circular-timer {
+	position: relative;
+	width: 240px;
+	height: 240px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Rotates the SVG so the countdown starts at the top (12 o'clock) */
+.progress-ring {
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: rotate(-90deg);
+}
+
+#progressRingCircle {
+	stroke-dasharray: 691;
+	stroke-dashoffset: 0;
+}
+
+/* Animates the ring disappearing */
+@keyframes drain {
+	from {
+		stroke-dashoffset: 0;
+	}
+	to {
+		stroke-dashoffset: 691;
+	}
+}
+
+.timer-text {
+	font-size: 3.5rem;
+	color: #000;
+}
+
+.skip-btn {
+	padding: 10px 24px;
+	font-size: 1rem;
+	color: #49588b;
+	background-color: transparent;
+	border: 1px solid #49588b;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s
+		ease;
+}
+
+.skip-btn:hover {
+	background-color: #f0f0f5;
+}
