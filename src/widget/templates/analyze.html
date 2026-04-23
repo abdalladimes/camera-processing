@@ -1,0 +1,45 @@
+<template>
+    hi there
+
+
+    <div id="detectionFailedContainer">
+
+    </div>
+
+    <div id="analyzingContainer"></div>
+
+    <div id="resultsContainer"></div>
+
+
+
+
+
+    <div>
+        <h2>openCV Test </h2>
+        <div>
+            <h5>Tips:</h5>
+            <div>
+                <p>Saturation Target: 0 to 20</p>
+            </div>
+            <div>
+                <p>Brightness Target: 150 to 230</p>
+            </div>
+            <div>
+                <p>RGB Color Balance (Target: R, G, and B within 20 points of each other)</p>
+            </div>
+
+            <h3>Test Results</h3>
+            <div id="testResults"></div>
+            <div id="colorResults" style="min-width: 100px;height: 50px;"></div>
+        </div>
+    </div>
+
+    <div id="originalImage"></div>
+    <canvas style='width:100%' id='canvasOutput'></canvas>
+    <div id="isBlurry"></div>
+    <div id="extractedColors"></div>
+    <div id="results"></div>
+
+    <button id="retryButton">retry</button>
+
+</template>

@@ -1,12 +1,14 @@
 import navigationService from '../services/navigation.service';
 import testsConfigService from '../services/testsConfig.service';
+import historyService from '../services/history.service';
 import timer from './timer.view';
 const config = {
     datastoreTag: 'config',
     selectors: {
         introductionWysiwyg: '#introductionWysiwyg',
         timerWysiwyg: '#timerWysiwyg',
-        scanQRButton: '#scanQRButton'
+        scanQRButton: '#scanQRButton',
+        historyBtn: '#historyBtn',
     }
 }
 var elements = {}; // to hold references to DOM elements
@@ -17,6 +19,18 @@ function init() {
         const selector = config.selectors[selectorKey];
         elements[selectorKey] = document.querySelector(selector);
     });
+
+
+    historyService.getHistory((error, value) => {
+        if (error) {
+            console.error('Error fetching tests history from localStorage', error);
+            elements.historyBtn.style.display = 'none';
+            return;
+        }
+        // elements.historyBtn.style.display = value && value.length > 0 ? 'block' : 'none';
+    });
+
+
     applyBodyMarginBottom();
     buildfire.datastore.onUpdate((event) => {
         console.log('Data has been updated ', event);
@@ -36,30 +50,27 @@ function init() {
     });
 
     elements.scanQRButton.addEventListener('click', () => {
-        buildfire.services.camera.barcodeScanner.scan(
-            {
-                preferFrontCamera: false,
-                showFlipCameraButton: true,
-                formats: "QR_CODE,PDF_417",
-            },
-            (err, result) => {
-                if (err) return console.error(err);
-
-                handleQRScanResult(result);
+        navigationService.push({
+            template: 'timer', view: timer, data: {
+                test: {
+                    [Object.keys(testsConfigService.testsConfig)[0]]: testsConfigService.testsConfig[Object.keys(testsConfigService.testsConfig)[0]],
+                }
             }
-        );
+        }, (err) => { });
+    });
+    elements.historyBtn.addEventListener('click', () => {
+        navigationService.push({ template: 'history' }, (err) => { });
     });
 }
 
-function handleQRScanResult(result) {
+function handleQRScanResult(result) { // TODO: for QR
     if (result && result.text) {
         for (const test of Object.keys(testsConfigService.testsConfig)) {
             if (result.text.toLowerCase().includes(test.toLowerCase())) {
-                navigationService.pushToHistory({ template: 'timer', view: timer, data: { test: test } }, (err) => { });
+                navigationService.push({ template: 'timer', data: { test: test } }, (err) => { });
             }
         }
     }
-
 }
 
 function applyBodyMarginBottom() {
@@ -67,7 +78,6 @@ function applyBodyMarginBottom() {
     const scanButtonMArginBottom = rootStyles.getPropertyValue('--scan-btn-margin-bottom');
     const scanBttonHeight = elements.scanQRButton.offsetHeight;
     document.body.style.height = `calc(100% - (${scanButtonMArginBottom} + ${scanBttonHeight}px))`;
-
 }
 
 export default { init }

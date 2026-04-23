@@ -1,20 +1,11 @@
 import navigationService from './services/navigation.service';
-import home from './views/home.view';
-import parameter from './views/parameter.view';
-const { pushToHistory, popFromHistory } = navigationService;
-
-
-
-const views = {
-    parameter: parameter,
-    home: home
-}
-
+import viewsService from './services/views.service';
+const { push, pop } = navigationService;
 
 function init() {
-    pushToHistory({
+    viewsService.init();
+    push({
         template: 'home',
-        view: home,
         notifyWidget: false
     });
 
@@ -24,10 +15,10 @@ function init() {
             case 'navigation':
                 switch (message.type) {
                     case 'push':
-                        pushToHistory({ template: message.data.title, view: views[message.data.title], notifyWidget: false });
+                        push({ template: message.options.title, notifyWidget: false });
                         break;
                     case 'pop':
-                        popFromHistory({ notifyWidget: false, skipPop: true });
+                        pop({ notifyWidget: false, skipPop: true });
                         break;
                     default:
                         console.warn('Unknown navigation type:', message.type);

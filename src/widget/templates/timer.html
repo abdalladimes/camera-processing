@@ -1,4 +1,15 @@
 <template>
-<div id="testName"></div>
+    <div id="testName"></div>
     <div id="timerWysiwyg"></div>
+    <div class="timer-wrapper">
+        <div class="circular-timer">
+            <svg class="progress-ring" id="progressCircle" width="240" height="240">
+                <circle id="progressRingCircle" stroke="#422f64" stroke-width="12" fill="transparent" r="110"
+                    cx="120" cy="120" />
+            </svg>
+            <div class="timer-text" id="timeDisplay">0:60</div>
+        </div>
+
+        <button id="skipTimerButton" class="skip-btn">Skip Timer</button>
+    </div>
 </template>

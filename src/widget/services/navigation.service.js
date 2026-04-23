@@ -1,4 +1,5 @@
 import buildfire from 'buildfire';
+import viewsService from './views.service.js';
 const templates = {};
 const historyStack = [];
 
@@ -6,19 +7,47 @@ function getHistory() {
     return historyStack.slice();
 }
 
-function pushToHistory(options, callback) {
-    if (!options || !options.template || !options.view) {
-        console.warn('Invalid options for pushToHistory:', options);
+/**
+ * 
+ * @param {{
+ *   template: string,
+ *   data?: object,
+ *   notifyControl?: boolean
+ * }} options 
+ * @param {*} callback 
+ * @returns 
+ */
+
+function push(options, callback) {
+    if (!options || !options.template) {
+        console.warn('Invalid options for push:', options);
         if (callback) {
-            callback('Invalid options for pushToHistory', null);
+            callback('Invalid options for push', null);
         }
         return;
     }
-    historyStack.push({ template: options.template, view: options.view, data: options.data });
+    const view = viewsService.getAllViews()[options.template];
+    if (!view) {
+        console.warn('No view found for template:', options.template);
+        if (callback) {
+            callback('No view found for template', null);
+        }
+        return;
+    }
+    const current = historyStack[historyStack.length - 1];
+
+    if (current && current.template === options.template) {
+        console.warn('Already on the requested template:', options.template);
+        if (callback) {
+            callback();
+        }
+        return;
+    }
+    historyStack.push({ template: options.template, view: view, data: options.data });
     buildfire.history.push(options.template, { showLabelInTitlebar: false });
     navigate(options.template, () => {
-        if (options.view && options.view.init) {
-            options.view.init(options.data || {});
+        if (view && view.init) {
+            view.init(options.data || {});
         }
         if (options.notifyControl || options.notifyControl === undefined) {
             buildfire.messaging.sendMessageToControl({ event: 'navigation', type: 'push', options: { title: options.template, data: options.data } });
@@ -29,7 +58,7 @@ function pushToHistory(options, callback) {
     });
 }
 
-function popFromHistory(options, callback) {
+function pop(options, callback) {
     if (historyStack.length == 1) {
         if (callback) {
             callback('No more history to pop', null);
@@ -60,6 +89,11 @@ function popFromHistory(options, callback) {
     }
 }
 
+function goHome() {
+    historyStack.length = 0;
+    push({ template: 'home', notifyControl: false });
+}
+
 function onPopHandler() {
     const current = historyStack[historyStack.length - 1];
     if (current) {
@@ -67,7 +101,7 @@ function onPopHandler() {
             current.view.destroy();
 
         }
-        popFromHistory({ skipPop: true }, () => { });
+        pop({ skipPop: true }, () => { });
     }
 }
 
@@ -114,7 +148,8 @@ function navigate(template, callback) {
 
 export default {
     getHistory,
-    pushToHistory,
-    popFromHistory,
+    push,
+    pop,
+    goHome,
     onPopHandler
 }

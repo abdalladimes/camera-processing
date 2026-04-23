@@ -1,19 +1,13 @@
 import buildfire from 'buildfire';
-import parameter from './views/parameter.view.js';
-import home from './views/home.view.js';
 import navigationService from './services/navigation.service.js';
+import viewsService from './services/views.service.js';
 
-const views = {
-    parameter: parameter,
-    home: home
-}
-
-const { pushToHistory, popFromHistory, onPopHandler } = navigationService;
+const { push, pop, onPopHandler, goHome } = navigationService;
 
 function init() {
-    pushToHistory({
+    viewsService.init();
+    push({
         template: 'home',
-        view: views['home'],
         notifyControl: false
     });
     buildfire.messaging.onReceivedMessage = (message) => {
@@ -22,10 +16,13 @@ function init() {
             case 'navigation':
                 switch (message.type) {
                     case 'push':
-                        pushToHistory({ template: message.options.title, view: views[message.options.title], data: message.options.data, notifyControl: false });
+                        push({ template: message.options.title, data: message.options.data, notifyControl: false });
                         break;
                     case 'pop':
-                        popFromHistory({ notifyControl: false, skipPop: true });
+                        pop({ notifyControl: false, skipPop: true });
+                        break;
+                    case 'home':
+                        goHome();
                         break;
                     default:
                         console.warn('Unknown navigation type:', message.type);

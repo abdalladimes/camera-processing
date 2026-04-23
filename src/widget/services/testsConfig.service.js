@@ -5,123 +5,1253 @@ const testParameters = [
     {
         id: 1,
         name: 'Ascorbate',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+                correspondingValue: '0',
+                referenceColor: {
+                    hex: '#368295',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 },
+                },
+                interpretation: 'Normal Range',
+                clarification: {
+                    healthy: { color: 'green' },
+                    unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: '0.6',
+                referenceColor: {
+                    hex: '#18a185',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Normal Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: '1.4',
+                referenceColor: {
+                    hex: '#89c765',
+                    rgb: { r: 255, g: 255, b: 255 },
+                    hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Excessive Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: '2.8',
+                referenceColor: {
+                    hex: '#d0d139',
+                    rgb: { r: 255, g: 255, b: 255 },
+                    hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Excessive Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: '5',
+                referenceColor: {
+                    hex: '#faf39b',
+                    rgb: { r: 255, g: 255, b: 255 },
+                    hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Extreme Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+        ],
     },
     {
         id: 2,
         name: 'BHB',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+                correspondingValue: 'Neg.',
+                referenceColor: {
+                    hex: '#fee0c8'
+                },
+                interpretation: 'No BHB',
+                clarification: {}
+            },
+            {
+                correspondingValue: '4(0.4)',
+                referenceColor: {
+                    hex: '#fbc9bc'
+                },
+                interpretation: 'Trace BHB',
+                clarification: {}
+            },
+            {
+                correspondingValue: '12(1.2)',
+                referenceColor: {
+                    hex: '#e99ba6'
+                },
+                interpretation: 'Small BHB',
+                clarification: {}
+            },
+            {
+                correspondingValue: '32(3.2)',
+                referenceColor: {
+                    hex: '#d16984'
+                },
+                interpretation: 'Moderate BHB',
+                clarification: {}
+            },
+            {
+                correspondingValue: '64(6.4)',
+                referenceColor: {
+                    hex: '#b75676'
+                },
+                interpretation: 'Large BHB',
+                clarification: {}
+            },
+            {
+                correspondingValue: '128(12.8)',
+                referenceColor: {
+                    hex: '#944266'
+                },
+                interpretation: 'High BHB',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 3,
         name: 'Bilirubin',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+                correspondingValue: 'Neg',
+                referenceColor: {
+                    hex: '#fffde7'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+                correspondingValue: 'Small 17',
+                referenceColor: {
+                    hex: '#ffdaab'
+                },
+                interpretation: 'Small Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Moderate 50',
+                referenceColor: {
+                    hex: '#f5c099'
+                },
+                interpretation: 'Moderate Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Large 100',
+                referenceColor: {
+                    hex: '#eaa790'
+                },
+                interpretation: 'Extreme Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 4,
         name: 'Blood',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: 'Neg',
+                referenceColor: {
+                    hex: '#ffcc31'
+                },
+                interpretation: 'Negative (Normal) Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Non hemolyzed 10 Trace',
+                referenceColor: {
+                    hex: '#ffcc31'
+                },
+                interpretation: 'Trace Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Hemolyzed 10 Trace',
+                referenceColor: {
+                    hex: '#ddbb3c'
+                },
+                interpretation: 'Very Small Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '25 Small ',
+                referenceColor: {
+                    hex: '#bcb144'
+                },
+                interpretation: 'Above-normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '80 Moderate',
+                referenceColor: {
+                    hex: '#85a24e'
+                },
+                interpretation: 'Moderate Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '200 Large',
+                referenceColor: {
+                    hex: '#598543'
+                },
+                interpretation: 'Significant Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 5,
         name: 'Calcium',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '<1',
+                referenceColor: {
+                    hex: '#fff2d4'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '2.5',
+                referenceColor: {
+                    hex: '#f3e8e9'
+                },
+                interpretation: 'Mildly Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '5',
+                referenceColor: {
+                    hex: '#edd9e1'
+                },
+                interpretation: 'High Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '7.5',
+                referenceColor: {
+                    hex: '#e0c6d7'
+                },
+                interpretation: 'Borderline High Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '>10',
+                referenceColor: {
+                    hex: '#bdafce'
+                },
+                interpretation: 'Excessively High Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 6,
         name: 'Creatinine',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '0.9',
+                referenceColor: {
+                    hex: '#fff1d2'
+                },
+                interpretation: 'Low-normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '4.4',
+                referenceColor: {
+                    hex: '#f2ddbd'
+                },
+                interpretation: 'Low Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '8.8',
+                referenceColor: {
+                    hex: '#e5d0b9'
+                },
+                interpretation: 'Moderate Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '17.7',
+                referenceColor: {
+                    hex: '#d8c8b7'
+                },
+                interpretation: 'Reasonable Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '26.5',
+                referenceColor: {
+                    hex: '#b7a5a9'
+                },
+                interpretation: 'Elevated Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 7,
         name: 'Free Radical',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '0',
+                referenceColor: {
+                    hex: '#fff7e5'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '0.002',
+                referenceColor: {
+                    hex: '#fff1e2'
+                },
+                interpretation: 'Low-normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '0.004',
+                referenceColor: {
+                    hex: '#fee7dc'
+                },
+                interpretation: 'Semi-low Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '0.008',
+                referenceColor: {
+                    hex: '#fdddd7'
+                },
+                interpretation: 'Low Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '0.02',
+                referenceColor: {
+                    hex: '#fcd4d2'
+                },
+                interpretation: 'Low Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '0.1',
+                referenceColor: {
+                    hex: '#facacc'
+                },
+                interpretation: 'Very Low Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 8,
         name: 'Glucose',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: 'Neg. (0-0.8)',
+                referenceColor: {
+                    hex: '#a2dadb'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '5 Trace ',
+                referenceColor: {
+                    hex: '#b6dcae'
+                },
+                interpretation: 'Small-to-Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '15',
+                referenceColor: {
+                    hex: '#bec775'
+                },
+                interpretation: 'Trace Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '30',
+                referenceColor: {
+                    hex: '#c5af25'
+                },
+                interpretation: 'Above-normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '60',
+                referenceColor: {
+                    hex: '#b68330'
+                },
+                interpretation: 'Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '110',
+                referenceColor: {
+                    hex: '#a26232'
+                },
+                interpretation: 'Extreme Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 9,
         name: 'Ketone',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: 'Neg',
+                referenceColor: {
+                    hex: '#fee0c8'
+                },
+                interpretation: 'No Ketones',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Trace 0.5',
+                referenceColor: {
+                    hex: '#fbc9bc'
+                },
+                interpretation: 'Trace Ketones',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Small 1.5',
+                referenceColor: {
+                    hex: '#e99ba6'
+                },
+                interpretation: 'Small Ketones',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Moderate 4.0',
+                referenceColor: {
+                    hex: '#d16984'
+                },
+                interpretation: 'Moderate Ketones',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Large 8',
+                referenceColor: {
+                    hex: '#b75676'
+                },
+                interpretation: 'Large Ketones',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Large 16',
+                referenceColor: {
+                    hex: '#944266'
+                },
+                interpretation: 'Very Large Ketones',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 10,
         name: 'Leukocytes',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+                correspondingValue: 'Neg',
+                referenceColor: {
+                    hex: '#fdfad7',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Normal Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: 'Trace 15',
+                referenceColor: {
+                    hex: '#f8e9cf',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Trace (Positive) Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: 'Small 70',
+                referenceColor: {
+                    hex: '#eed9cf',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Small (Positive) Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: 'Moderate 125',
+                referenceColor: {
+                    hex: '#c6abba',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Moderate (Positive) Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: 'Large 500',
+                referenceColor: {
+                    hex: '#aa91b2',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Excessive (Positive) Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+        ],
     },
     {
         id: 11,
         name: 'Magnesium',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '10',
+                referenceColor: {
+                    hex: '#f3e3c4'
+                },
+                interpretation: 'Normal (Negative) Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '15',
+                referenceColor: {
+                    hex: '#f3e4e5'
+                },
+                interpretation: 'Moderate Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '20',
+                referenceColor: {
+                    hex: '#eccfd9'
+                },
+                interpretation: 'Low Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '25',
+                referenceColor: {
+                    hex: '#dfb9cd'
+                },
+                interpretation: 'Lower Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '>40',
+                referenceColor: {
+                    hex: '#be9dc1'
+                },
+                interpretation: 'Lowest Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 12,
         name: 'Micro Albumin',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '10',
+                referenceColor: {
+                    hex: '#e1f1eb'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '30',
+                referenceColor: {
+                    hex: '#d1ecea'
+                },
+                interpretation: 'Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '80',
+                referenceColor: {
+                    hex: '#b6e2e9'
+                },
+                interpretation: 'Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '150',
+                referenceColor: {
+                    hex: '#a0dbe7'
+                },
+                interpretation: 'Extreme Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 13,
         name: 'Nitrities',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+                correspondingValue: 'Any Degree of Uniform Pink Color',
+                referenceColor: {
+                    hex: '#fde4e7',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Excessive (Positive) Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+        ]
     },
     {
         id: 14,
         name: 'pH',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '5',
+                referenceColor: {
+                    hex: '#f3d15e'
+                },
+                interpretation: 'Acidic Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '6',
+                referenceColor: {
+                    hex: '#babc33'
+                },
+                interpretation: 'Slightly Acidic Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '6.5',
+                referenceColor: {
+                    hex: '#9cb33c'
+                },
+                interpretation: 'Normal (Balanced) Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '7',
+                referenceColor: {
+                    hex: '#86a23f'
+                },
+                interpretation: 'Optimal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '7.5',
+                referenceColor: {
+                    hex: '#739e42'
+                },
+                interpretation: 'Normal (Balanced) Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '8',
+                referenceColor: {
+                    hex: '#558f45'
+                },
+                interpretation: 'Mildly Alkaline Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '8.5',
+                referenceColor: {
+                    hex: '#00769a'
+                },
+                interpretation: 'Above Alkaline Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 15,
         name: 'Protein',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: 'Neg.',
+                referenceColor: {
+                    hex: '#fbe960'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: 'Trace',
+                referenceColor: {
+                    hex: '#f7e761'
+                },
+                interpretation: 'Trace Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '0.3',
+                referenceColor: {
+                    hex: '#ebe263'
+                },
+                interpretation: 'Moderate Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1',
+                referenceColor: {
+                    hex: '#c5d568'
+                },
+                interpretation: 'Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '3',
+                referenceColor: {
+                    hex: '#93c789'
+                },
+                interpretation: 'Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '20',
+                referenceColor: {
+                    hex: '#78c18a'
+                },
+                interpretation: 'Extreme Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 16,
         name: 'Sodium (Salinity)',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '0',
+                referenceColor: {
+                    hex: '#c2572e'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '100',
+                referenceColor: {
+                    hex: '#cb7d81'
+                },
+                interpretation: 'Slighty High Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '200',
+                referenceColor: {
+                    hex: '#e09288'
+                },
+                interpretation: 'High Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '300',
+                referenceColor: {
+                    hex: '#e1ada3'
+                },
+                interpretation: 'Higher Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '400',
+                referenceColor: {
+                    hex: '#eecec1'
+                },
+                interpretation: 'Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '500',
+                referenceColor: {
+                    hex: '#efe2dc'
+                },
+                interpretation: 'Extreme Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 17,
         name: 'Specific Gravity',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '1',
+                referenceColor: {
+                    hex: '#00879e'
+                },
+                interpretation: 'Low Diluted Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1.005',
+                referenceColor: {
+                    hex: '#6d945e'
+                },
+                interpretation: 'Diluted Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1.01',
+                referenceColor: {
+                    hex: '#859e4d'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1.015',
+                referenceColor: {
+                    hex: '#b2ae47'
+                },
+                interpretation: 'Ideal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1.02',
+                referenceColor: {
+                    hex: '#c8bb43'
+                },
+                interpretation: 'Normal to Slightly Concentrated Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1.025',
+                referenceColor: {
+                    hex: '#dcb848'
+                },
+                interpretation: 'Concentrated Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1.03',
+                referenceColor: {
+                    hex: '#f3c736'
+                },
+                interpretation: 'Very Concentrated Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 18,
         name: 'Uric Acid',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '20',
+                referenceColor: {
+                    hex: '#eceed2'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '50',
+                referenceColor: {
+                    hex: '#dddfcc'
+                },
+                interpretation: 'Elevated Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '100',
+                referenceColor: {
+                    hex: '#d3d6c9'
+                },
+                interpretation: 'Medium-high Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '300',
+                referenceColor: {
+                    hex: '#bbc1c1'
+                },
+                interpretation: 'High Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '700',
+                referenceColor: {
+                    hex: '#a9a9b6'
+                },
+                interpretation: 'Upper End of High Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1100',
+                referenceColor: {
+                    hex: '#9a9bb0'
+                },
+                interpretation: 'Significantly High Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1500',
+                referenceColor: {
+                    hex: '#9492ab'
+                },
+                interpretation: 'Exceptionally High Range',
+                clarification: {}
+            },
+        ]
     },
     {
         id: 19,
         name: 'Urobilinogen',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '3.3',
+                referenceColor: {
+                    hex: '#fff2d9'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '16',
+                referenceColor: {
+                    hex: '#fcccb9'
+                },
+                interpretation: 'Normal Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '33',
+                referenceColor: {
+                    hex: '#f9aea0'
+                },
+                interpretation: 'Considered Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '66',
+                referenceColor: {
+                    hex: '#f8a691'
+                },
+                interpretation: 'Considered Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '131',
+                referenceColor: {
+                    hex: '#f19982'
+                },
+                interpretation: 'Considered Extreme Range',
+                clarification: {}
+            },
+        ],
     },
     {
         id: 20,
         name: 'Zinc',
-        icon: {},
+        imageUrl: '',
         info: '',
+        valueRanges: [
+            {
+
+                correspondingValue: '0',
+                referenceColor: {
+                    hex: '#f7b7cc'
+                },
+                interpretation: 'Normal (Negative) Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '0.5',
+                referenceColor: {
+                    hex: '#eab3cc'
+                },
+                interpretation: 'Standard Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '1',
+                referenceColor: {
+                    hex: '#deafcb'
+                },
+                interpretation: 'High End of Standard Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '2',
+                referenceColor: {
+                    hex: '#d4bed6'
+                },
+                interpretation: 'Excessive Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '5',
+                referenceColor: {
+                    hex: '#bcc0da'
+                },
+                interpretation: 'Elevated Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '10',
+                referenceColor: {
+                    hex: '#b0bcda'
+                },
+                interpretation: 'Highly Elevated Range',
+                clarification: {}
+            },
+            {
+
+                correspondingValue: '25',
+                referenceColor: {
+                    hex: '#94c5e3'
+                },
+                interpretation: 'Extreme Range',
+                clarification: {}
+            },
+        ]
     },
+    {
+        id: 21,
+        name: 'Nitrite',
+        imageUrl: '',
+        info: '',
+        valueRanges: [
+            {
+                correspondingValue: 'Neg',
+                referenceColor: {
+                    hex: '#fffde7',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Normal Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: 'Positive (light pink)',
+                referenceColor: {
+                    hex: '#fee7dc',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Moderate (Positive) Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+            {
+                correspondingValue: 'Positive (dark pink)',
+                referenceColor: {
+                    hex: '#fcdee1',
+                    // rgb: { r: 255, g: 255, b: 255 },
+                    // hsv: { h: 60, s: 100, v: 100 }
+                },
+                interpretation: 'Extreme (Positive) Range',
+                clarification: {
+                    // healthy: { color: 'green' },
+                    // unhealthy: { color: 'red' }
+                }, // healthy/unhealthy for text color 
+            },
+        ],
+    },
+
+    // TODO: testing parameter
+    {
+        name: 'testt',
+        imageUrl: '',
+        info: '',
+        valueRanges: [
+            {
+                correspondingValue: '0',
+                referenceColor: {
+                    hex: '#000000'
+                },
+                interpretation: 'black',
+                clarification: {}
+            },
+            {
+                correspondingValue: '9',
+                referenceColor: {
+                    hex: '#ffffff'
+                },
+                interpretation: 'white',
+                clarification: {}
+            }
+        ]
+
+    }
 
 ]; // all parameters
 
@@ -129,31 +1259,22 @@ const testsConfig = {
     "complete 20-n-1": { // used in UI (comes from QR scanner)
         duration: 60, // seconds
         overlayImage: {
-            url: '',
+            url: './assets/height_blank.png',
             width: 50,
             height: 300,
         },
         parameters: {
             "Ascorbate": { // parameter exact name (string as test name) will be used in datastore also and UI
-                valueRanges: [
-                    {
-                        referenceColor: {
-                            rgb: { r: 255, g: 255, b: 0 },
-                            hsv: { h: 60, s: 100, v: 100 }
-                        },
-                        correspondingValue: '0.6',
-                        interpretation: 'HYDRATED', // test for display
-                        clarification: {
-                            healthy: { color: 'green' },
-                            unhealthy: { color: 'red' }
-                        }, // healthy/unhealthy for text color 
-                    }
-                ],
                 locationOnOverlay: {
-                    center: { y: 29 }, samplingOffsetRadius: 15 // has the samplingBoxSizePercentage already multiplied in it
+                    center: { y: 29, x: 25 }, samplingOffsetRadius: 15 // has the samplingBoxSizePercentage already multiplied in it
                 },
 
             },
+            "testt": {
+                locationOnOverlay: {
+                    center: { y: 49, x: 25 }, samplingOffsetRadius: 15 // has the samplingBoxSizePercentage already multiplied in it
+                },
+            }
         }
     }
 }
@@ -163,7 +1284,7 @@ function getTag() {
 }
 
 
-function get(options, callback) {
+function getDatastoreParameter(options, callback) {
     buildfire.datastore.search(
         {
             filter: { "$json.name": { "$eq": options.parameter.name } },
@@ -185,32 +1306,8 @@ function get(options, callback) {
     );
 };
 
-// function init() {
-//     // check if we have test parameters in the datastore, if not initialize them from the testParameters array
-//     buildfire.datastore.search(
-//         {
-//             filter: {},
-//             sort: { name: 1 },
-//         },
-//         DATASTORE_TAG, (err, result) => {
-//             if (err) {
-//                 console.error('Error fetching test parameters', err);
-//                 return;
-//             }
-//             if (!result || result.length === 0) {
-//                 for (const parameter of testParameters) {
-//                     buildfire.datastore.save(parameter, DATASTORE_TAG, (err) => {
-//                         if (err) {
-//                             console.error('Error saving test parameters', err);
-//                         } else {
-//                             console.log('Test parameters initialized');
-//                         }
-//                     });
-//                 }
-//             } else {
-//                 console.log('Test parameters already initialized');
-//             }
-//         });
-// }
+function getLocalParameter(parameterName) {
+    return testParameters.find(param => param.name === parameterName);
+}
 
-export default { get, getTag, testsConfig, testParameters };
+export default { getDatastoreParameter, getTag, testsConfig, testParameters, getLocalParameter };

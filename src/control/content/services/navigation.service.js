@@ -1,32 +1,47 @@
+import viewsService from './views.service';
 
 const templates = {};
 const historyStack = [];
 let backButtonElement = null;
 
-function getHistory() {
+function getNavigationHistory() {
     return historyStack.slice();
 }
 
-function pushToHistory(options, callback) {
-    if (!options || !options.template || !options.view) {
-        console.warn('Invalid options for pushToHistory:', options);
+function push(options, callback) {
+    if (!options || !options.template) {
+        console.warn('Invalid options for push:', options);
         if (callback) {
-            callback('Invalid options for pushToHistory', null);
+            callback('Invalid options for push', null);
+        }
+        return;
+    }
+    const view = viewsService.getAllViews()[options.template];
+    if (!view) {
+        console.warn('No view found for template:', options.template);
+        return;
+    }
+    const current = historyStack[historyStack.length - 1];
+
+    if (current && current.template === options.template) {
+        console.warn('Already on the requested template:', options.template);
+        if (callback) {
+            callback();
         }
         return;
     }
     const previous = historyStack[historyStack.length - 1];
-    historyStack.push({ template: options.template, view: options.view, data: options.data });
+    historyStack.push({ template: options.template, view: view, data: options.data });
     buildfire.history.push(options.template, { showLabelInTitlebar: false });
     navigate(options.template, () => {
         if (previous && previous.view && previous.view.destroy) {
             previous.view.destroy();
         }
-        if (options.view && options.view.init) {
-            options.view.init({ ...options.data });
+        if (view && view.init) {
+            view.init({ ...options.data });
         }
         if (options.notifyWidget || options.notifyWidget === undefined) {
-            buildfire.messaging.sendMessageToWidget({ event: 'navigation', type: 'push', options: { title: options.template, data: options.data } });
+            navigateWidget({ template: options.template, navigationType: 'push', data: options.data, popToHome: options.popToHome }, () => { });
         }
         toggleBackButton();
         if (callback) {
@@ -35,7 +50,7 @@ function pushToHistory(options, callback) {
     });
 }
 
-function popFromHistory(options, callback) {
+function pop(options, callback) {
     if (historyStack.length == 1) {
         if (callback) {
             callback('No more history to pop', null);
@@ -56,9 +71,6 @@ function popFromHistory(options, callback) {
             if (previous.view && previous.view.init) {
                 previous.view.init({ ...previous.data });
             }
-            if (!options || options.notifyWidget || options.notifyWidget === undefined) {
-                buildfire.messaging.sendMessageToWidget({ event: 'navigation', type: 'pop', options: { title: previous.template, data: previous.data } });
-            }
 
             toggleBackButton();
             if (callback) {
@@ -70,6 +82,17 @@ function popFromHistory(options, callback) {
             callback('No more history to pop', null);
         }
     }
+}
+
+function navigateWidget(options, callback) {
+    if (options.popToHome || options.popToHome === undefined) {
+        buildfire.messaging.sendMessageToWidget({ event: 'navigation', type: 'home', options: { title: 'home' } });
+    }
+    setTimeout(() => {
+        buildfire.messaging.sendMessageToWidget({ event: 'navigation', type: options.navigationType, options: { title: options.template, data: options.data } });
+
+    }, 0);
+
 }
 
 /** template management start */
@@ -113,17 +136,14 @@ function navigate(template, callback) {
     /** template management end */
 };
 
-
-
-
 function toggleBackButton() {
     if (!backButtonElement) {
         backButtonElement = document.getElementById('backButton');
         backButtonElement.addEventListener('click', () => {
-            popFromHistory({});
+            pop({});
         });
     }
-    if (getHistory().length > 1) {
+    if (getNavigationHistory().length > 1) {
         backButtonElement.style.display = 'block';
     } else {
         backButtonElement.style.display = 'none';
@@ -131,7 +151,7 @@ function toggleBackButton() {
 };
 
 export default {
-    getHistory,
-    pushToHistory,
-    popFromHistory,
+    push,
+    pop,
+    navigateWidget,
 }

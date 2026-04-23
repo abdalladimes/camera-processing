@@ -2,14 +2,15 @@ import parameter from './parameter.view';
 import navigationService from '../services/navigation.service';
 import testsConfigService from '../services/testsConfig.service';
 
-const { pushToHistory } = navigationService;
+const { push, navigateWidget } = navigationService;
 const DATASTORE_TAG = 'config';
 const state = {
     data: null,
     homeEditor: null,
     timerEditor: null,
     homeEditorInitialized: false,
-    timerEditorInitialized: false
+    timerEditorInitialized: false,
+    allParameters: testsConfigService.testParameters,
 }
 function init() {
     buildfire.spinner.show();
@@ -26,11 +27,11 @@ function init() {
             });
         }));
         promises.push(new Promise((resolve) => {
-
             initHomeWysiwyg(() => {
                 resolve();
             });
         }));
+
         Promise.all(promises).finally(() => {
             buildfire.spinner.hide();
         });
@@ -40,10 +41,8 @@ function init() {
     const testsListViewOptions = {
         appearance: {
             itemImageEditable: false,
+            itemImageStyle: 'none'
         },
-        // addButtonOptions: [
-        //     { title: 'Add New' },
-        // ],
         settings: {
             allowDragAndDrop: false,
             showAddButton: false,
@@ -52,7 +51,7 @@ function init() {
             contentMapping: {
                 idKey: 'id',
                 columns: [
-                    { imageKey: 'icon.selectedImages[0]' },
+                    { imageKey: 'imageUrl' },
                     { titleKey: 'name' },
                 ],
             }
@@ -66,7 +65,15 @@ function init() {
     let controlListView = new buildfire.components.control.listView('#testsListView', testsListViewOptions);
 
     controlListView.onDataRequest = (event, callback) => {
-        callback(testsConfigService.testParameters);
+        testsConfigService.getAll((error, allParameters) => {
+            if (error) {
+                console.error('Error fetching all parameters', error);
+                resolve();
+                return;
+            }
+            state.allParameters = allParameters;
+            callback(state.allParameters);
+        });
     };
 
     controlListView.onItemRender = (event, callback) => {
@@ -81,9 +88,8 @@ function init() {
     };
 
     controlListView.onItemActionClick = (event) => {
-        if (event.actionId === 'delete') {
-        } else if (event.actionId === 'edit') {
-            pushToHistory({ template: 'parameter', view: parameter, data: {parameter: event.item} }, (err) => {
+        if (event.actionId === 'edit') {
+            push({ template: 'parameter', view: parameter, data: { parameter: event.item } }, (err) => {
                 if (err) {
                     console.error('Error pushing to history:', err);
                 }
@@ -122,6 +128,11 @@ function initHomeWysiwyg(callback) {
                     if (timerDelay) clearTimeout(timerDelay);
                     timerDelay = setTimeout(() => { // use timer delay to avoid handling too many WYSIWYG updates
                         saveData();
+                        navigateWidget({ template: 'home', navigationType: 'push' }, (err) => {
+                            if (err) {
+                                console.error('Error pushing to history:', err);
+                            }
+                        });
                     }, 500);
                 }
             });
@@ -144,6 +155,11 @@ function initTimerWysiwyg(callback) {
                     if (timerDelay) clearTimeout(timerDelay);
                     timerDelay = setTimeout(() => { // use timer delay to avoid handling too many WYSIWYG updates
                         saveData();
+                        navigateWidget({ template: 'timer', navigationType: 'push' }, (err) => {
+                            if (err) {
+                                console.error('Error pushing to history:', err);
+                            }
+                        });
                     }, 500);
                 }
             });

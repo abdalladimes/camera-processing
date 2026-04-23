@@ -6,22 +6,22 @@ function init(options) {
         document.getElementById('testName').innerText = options.parameter.name;
     }
     buildfire.datastore.onUpdate((event) => {
-        testsConfigService.get({ parameter: options.parameter }, (err, result) => {
+        testsConfigService.getDatastoreParameter({ parameter: options.parameter }, (err, result) => {
             if (err) {
                 console.error('Error fetching data', err);
                 return;
             }
-            document.getElementById('wysiwygContent').innerHTML = result.data?.info || '';
+            document.getElementById('wysiwygContent').innerHTML = result?.data?.info || '';
         });
     });
 
 
-    testsConfigService.get({ parameter: options.parameter }, (err, result) => {
+    testsConfigService.getDatastoreParameter({ parameter: options.parameter }, (err, result) => {
         if (err) {
             console.error('Error fetching data', err);
             return;
         }
-        document.getElementById('wysiwygContent').innerHTML = result.data?.info || '';
+        document.getElementById('wysiwygContent').innerHTML = result?.data?.info || '';
     });
 }
 

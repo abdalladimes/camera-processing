@@ -49,6 +49,7 @@ const WebpackConfig = {
 
     plugins: [
         // Removed UglifyJsPlugin to disable JS minification
+        new webpack.optimize.UglifyJsPlugin(),
         new HtmlWebpackPlugin({
             filename: 'control/content/index.html',
             inject: true,
@@ -103,6 +104,20 @@ const WebpackConfig = {
             inject: true,
             minify: false,
             template: path.join(__dirname, '../src/widget/templates/home.html'),
+            chunks: ['devServer']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'widget/templates/history.html',
+            inject: true,
+            minify: { removeComments: true, collapseWhitespace: true },
+            template: path.join(__dirname, '../src/widget/templates/history.html'),
+            chunks: ['devServer']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'widget/templates/analyze.html',
+            inject: true,
+            minify: { removeComments: true, collapseWhitespace: true },
+            template: path.join(__dirname, '../src/widget/templates/analyze.html'),
             chunks: ['devServer']
         }),
         new CopyWebpackPlugin([{

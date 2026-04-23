@@ -2,8 +2,29 @@
 	display: none;
 }
 
+#iconContainer {
+	align-items: center;
+	background-color: #ececec;
+	display: flex;
+	height: 40px;
+	justify-content: center;
+	width: 40px;
+    cursor: pointer;
+}
+
+#iconContainer #addIcon {
+	font-size: 24px;
+}
+
+#iconContainer #parameterImage {
+	display: none;
+	height: 100%;
+	object-fit: contain;
+	width: 100%;
+}
+
 #testInformation {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 .section-title {
@@ -23,4 +44,14 @@
 	letter-spacing: 0.169px;
 	line-height: 22px; /* 169.231% */
 	margin: 12px 0;
+}
+
+.image-row {
+	display: flex;
+	justify-content: space-between;
+	max-width: 60%;
+	min-width: 160px;
+	align-items: center;
+	border-radius: 4px;
+	margin: 24px 0;
 }
