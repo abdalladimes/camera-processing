@@ -130,8 +130,12 @@ const WebpackConfig = {
             from: path.join(__dirname, '../src/resources'),
             to: path.join(__dirname, '../resources'),
         }], {
-            ignore: ['*.js', '*.html', '*.md']
+            ignore: ['*.js', '*.html', '*.md', '!**/lib/**']
         }),
+        new CopyWebpackPlugin([{
+            from: path.join(__dirname, '../src/widget/lib'),
+            to: path.join(__dirname, '../widget/lib'),
+        }]),
         new CopyWebpackPlugin([{
             from: path.join(__dirname, '../../../styles'),
             to: path.join(__dirname, '../styles'),

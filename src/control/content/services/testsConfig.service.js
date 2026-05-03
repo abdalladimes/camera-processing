@@ -3,7 +3,7 @@ const DATASTORE_TAG = 'testParameterInformation';
 
 const testParameters = [
     {
-        id: 1,
+        id: 1, // TODO: remove ids
         name: 'Ascorbate',
         imageUrl: '',
         info: '',
@@ -16,6 +16,7 @@ const testParameters = [
                     // hsv: { h: 60, s: 100, v: 100 },
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {
                     healthy: { color: 'green' },
                     unhealthy: { color: 'red' }
@@ -29,6 +30,7 @@ const testParameters = [
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -42,6 +44,7 @@ const testParameters = [
                     hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -55,6 +58,7 @@ const testParameters = [
                     hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -68,6 +72,7 @@ const testParameters = [
                     hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Extreme Range',
+                range: 'Outside of Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -87,6 +92,7 @@ const testParameters = [
                     hex: '#fee0c8'
                 },
                 interpretation: 'No BHB',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -95,6 +101,7 @@ const testParameters = [
                     hex: '#fbc9bc'
                 },
                 interpretation: 'Trace BHB',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -103,6 +110,7 @@ const testParameters = [
                     hex: '#e99ba6'
                 },
                 interpretation: 'Small BHB',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -111,6 +119,7 @@ const testParameters = [
                     hex: '#d16984'
                 },
                 interpretation: 'Moderate BHB',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -119,6 +128,7 @@ const testParameters = [
                     hex: '#b75676'
                 },
                 interpretation: 'Large BHB',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -127,6 +137,7 @@ const testParameters = [
                     hex: '#944266'
                 },
                 interpretation: 'High BHB',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -143,6 +154,7 @@ const testParameters = [
                     hex: '#fffde7'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -151,6 +163,7 @@ const testParameters = [
                     hex: '#ffdaab'
                 },
                 interpretation: 'Small Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -160,6 +173,7 @@ const testParameters = [
                     hex: '#f5c099'
                 },
                 interpretation: 'Moderate Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -169,6 +183,7 @@ const testParameters = [
                     hex: '#eaa790'
                 },
                 interpretation: 'Extreme Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -186,6 +201,7 @@ const testParameters = [
                     hex: '#ffcc31'
                 },
                 interpretation: 'Negative (Normal) Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -195,6 +211,7 @@ const testParameters = [
                     hex: '#ffcc31'
                 },
                 interpretation: 'Trace Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -204,6 +221,7 @@ const testParameters = [
                     hex: '#ddbb3c'
                 },
                 interpretation: 'Very Small Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -213,6 +231,7 @@ const testParameters = [
                     hex: '#bcb144'
                 },
                 interpretation: 'Above-normal Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -222,6 +241,7 @@ const testParameters = [
                     hex: '#85a24e'
                 },
                 interpretation: 'Moderate Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -231,6 +251,7 @@ const testParameters = [
                     hex: '#598543'
                 },
                 interpretation: 'Significant Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -248,6 +269,7 @@ const testParameters = [
                     hex: '#fff2d4'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -257,6 +279,7 @@ const testParameters = [
                     hex: '#f3e8e9'
                 },
                 interpretation: 'Mildly Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -266,6 +289,7 @@ const testParameters = [
                     hex: '#edd9e1'
                 },
                 interpretation: 'High Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -275,6 +299,7 @@ const testParameters = [
                     hex: '#e0c6d7'
                 },
                 interpretation: 'Borderline High Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -284,6 +309,7 @@ const testParameters = [
                     hex: '#bdafce'
                 },
                 interpretation: 'Excessively High Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -301,6 +327,7 @@ const testParameters = [
                     hex: '#fff1d2'
                 },
                 interpretation: 'Low-normal Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -310,6 +337,7 @@ const testParameters = [
                     hex: '#f2ddbd'
                 },
                 interpretation: 'Low Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -319,6 +347,7 @@ const testParameters = [
                     hex: '#e5d0b9'
                 },
                 interpretation: 'Moderate Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -328,6 +357,7 @@ const testParameters = [
                     hex: '#d8c8b7'
                 },
                 interpretation: 'Reasonable Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -337,6 +367,7 @@ const testParameters = [
                     hex: '#b7a5a9'
                 },
                 interpretation: 'Elevated Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -354,6 +385,7 @@ const testParameters = [
                     hex: '#fff7e5'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -363,6 +395,7 @@ const testParameters = [
                     hex: '#fff1e2'
                 },
                 interpretation: 'Low-normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -372,6 +405,7 @@ const testParameters = [
                     hex: '#fee7dc'
                 },
                 interpretation: 'Semi-low Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -381,6 +415,7 @@ const testParameters = [
                     hex: '#fdddd7'
                 },
                 interpretation: 'Low Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -390,6 +425,7 @@ const testParameters = [
                     hex: '#fcd4d2'
                 },
                 interpretation: 'Low Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -399,6 +435,7 @@ const testParameters = [
                     hex: '#facacc'
                 },
                 interpretation: 'Very Low Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -416,6 +453,7 @@ const testParameters = [
                     hex: '#a2dadb'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -425,6 +463,7 @@ const testParameters = [
                     hex: '#b6dcae'
                 },
                 interpretation: 'Small-to-Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -434,6 +473,7 @@ const testParameters = [
                     hex: '#bec775'
                 },
                 interpretation: 'Trace Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -443,6 +483,7 @@ const testParameters = [
                     hex: '#c5af25'
                 },
                 interpretation: 'Above-normal Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -452,6 +493,7 @@ const testParameters = [
                     hex: '#b68330'
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -461,6 +503,7 @@ const testParameters = [
                     hex: '#a26232'
                 },
                 interpretation: 'Extreme Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -478,6 +521,7 @@ const testParameters = [
                     hex: '#fee0c8'
                 },
                 interpretation: 'No Ketones',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -487,6 +531,7 @@ const testParameters = [
                     hex: '#fbc9bc'
                 },
                 interpretation: 'Trace Ketones',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -496,6 +541,7 @@ const testParameters = [
                     hex: '#e99ba6'
                 },
                 interpretation: 'Small Ketones',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -505,6 +551,7 @@ const testParameters = [
                     hex: '#d16984'
                 },
                 interpretation: 'Moderate Ketones',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -514,6 +561,7 @@ const testParameters = [
                     hex: '#b75676'
                 },
                 interpretation: 'Large Ketones',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -523,6 +571,7 @@ const testParameters = [
                     hex: '#944266'
                 },
                 interpretation: 'Very Large Ketones',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -541,6 +590,7 @@ const testParameters = [
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -554,6 +604,7 @@ const testParameters = [
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Trace (Positive) Range',
+                range: 'Outside of Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -567,6 +618,7 @@ const testParameters = [
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Small (Positive) Range',
+                range: 'Outside of Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -580,6 +632,7 @@ const testParameters = [
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Moderate (Positive) Range',
+                range: 'Outside of Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -593,6 +646,7 @@ const testParameters = [
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Excessive (Positive) Range',
+                range: 'Outside of Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -613,6 +667,7 @@ const testParameters = [
                     hex: '#f3e3c4'
                 },
                 interpretation: 'Normal (Negative) Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -622,6 +677,7 @@ const testParameters = [
                     hex: '#f3e4e5'
                 },
                 interpretation: 'Moderate Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -631,6 +687,7 @@ const testParameters = [
                     hex: '#eccfd9'
                 },
                 interpretation: 'Low Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -640,6 +697,7 @@ const testParameters = [
                     hex: '#dfb9cd'
                 },
                 interpretation: 'Lower Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -649,6 +707,7 @@ const testParameters = [
                     hex: '#be9dc1'
                 },
                 interpretation: 'Lowest Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -666,6 +725,7 @@ const testParameters = [
                     hex: '#e1f1eb'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -675,6 +735,7 @@ const testParameters = [
                     hex: '#d1ecea'
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -684,6 +745,7 @@ const testParameters = [
                     hex: '#b6e2e9'
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -693,6 +755,7 @@ const testParameters = [
                     hex: '#a0dbe7'
                 },
                 interpretation: 'Extreme Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -711,6 +774,7 @@ const testParameters = [
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
                 interpretation: 'Excessive (Positive) Range',
+                range: 'Outside of Range',
                 clarification: {
                     // healthy: { color: 'green' },
                     // unhealthy: { color: 'red' }
@@ -731,6 +795,7 @@ const testParameters = [
                     hex: '#f3d15e'
                 },
                 interpretation: 'Acidic Range',
+                range: 'Below Range',
                 clarification: {}
             },
             {
@@ -740,6 +805,7 @@ const testParameters = [
                     hex: '#babc33'
                 },
                 interpretation: 'Slightly Acidic Range',
+                range: 'Below Range',
                 clarification: {}
             },
             {
@@ -749,6 +815,7 @@ const testParameters = [
                     hex: '#9cb33c'
                 },
                 interpretation: 'Normal (Balanced) Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -758,6 +825,7 @@ const testParameters = [
                     hex: '#86a23f'
                 },
                 interpretation: 'Optimal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -767,6 +835,7 @@ const testParameters = [
                     hex: '#739e42'
                 },
                 interpretation: 'Normal (Balanced) Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -776,6 +845,7 @@ const testParameters = [
                     hex: '#558f45'
                 },
                 interpretation: 'Mildly Alkaline Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -785,6 +855,7 @@ const testParameters = [
                     hex: '#00769a'
                 },
                 interpretation: 'Above Alkaline Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -802,6 +873,7 @@ const testParameters = [
                     hex: '#fbe960'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -811,6 +883,7 @@ const testParameters = [
                     hex: '#f7e761'
                 },
                 interpretation: 'Trace Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -820,6 +893,7 @@ const testParameters = [
                     hex: '#ebe263'
                 },
                 interpretation: 'Moderate Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -829,6 +903,7 @@ const testParameters = [
                     hex: '#c5d568'
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -838,6 +913,7 @@ const testParameters = [
                     hex: '#93c789'
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -847,6 +923,7 @@ const testParameters = [
                     hex: '#78c18a'
                 },
                 interpretation: 'Extreme Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -864,6 +941,7 @@ const testParameters = [
                     hex: '#c2572e'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -873,6 +951,7 @@ const testParameters = [
                     hex: '#cb7d81'
                 },
                 interpretation: 'Slighty High Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -882,6 +961,7 @@ const testParameters = [
                     hex: '#e09288'
                 },
                 interpretation: 'High Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -891,6 +971,7 @@ const testParameters = [
                     hex: '#e1ada3'
                 },
                 interpretation: 'Higher Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -900,6 +981,7 @@ const testParameters = [
                     hex: '#eecec1'
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -909,6 +991,7 @@ const testParameters = [
                     hex: '#efe2dc'
                 },
                 interpretation: 'Extreme Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -926,6 +1009,7 @@ const testParameters = [
                     hex: '#00879e'
                 },
                 interpretation: 'Low Diluted Range',
+                range: 'Below Range',
                 clarification: {}
             },
             {
@@ -935,6 +1019,7 @@ const testParameters = [
                     hex: '#6d945e'
                 },
                 interpretation: 'Diluted Range',
+                range: 'Below Range',
                 clarification: {}
             },
             {
@@ -944,6 +1029,7 @@ const testParameters = [
                     hex: '#859e4d'
                 },
                 interpretation: 'Normal Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -953,6 +1039,7 @@ const testParameters = [
                     hex: '#b2ae47'
                 },
                 interpretation: 'Ideal Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -962,6 +1049,7 @@ const testParameters = [
                     hex: '#c8bb43'
                 },
                 interpretation: 'Normal to Slightly Concentrated Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -971,6 +1059,7 @@ const testParameters = [
                     hex: '#dcb848'
                 },
                 interpretation: 'Concentrated Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -980,6 +1069,7 @@ const testParameters = [
                     hex: '#f3c736'
                 },
                 interpretation: 'Very Concentrated Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -997,6 +1087,7 @@ const testParameters = [
                     hex: '#eceed2'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -1006,6 +1097,7 @@ const testParameters = [
                     hex: '#dddfcc'
                 },
                 interpretation: 'Elevated Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1015,6 +1107,7 @@ const testParameters = [
                     hex: '#d3d6c9'
                 },
                 interpretation: 'Medium-high Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1024,6 +1117,7 @@ const testParameters = [
                     hex: '#bbc1c1'
                 },
                 interpretation: 'High Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1033,6 +1127,7 @@ const testParameters = [
                     hex: '#a9a9b6'
                 },
                 interpretation: 'Upper End of High Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1042,6 +1137,7 @@ const testParameters = [
                     hex: '#9a9bb0'
                 },
                 interpretation: 'Significantly High Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1051,6 +1147,7 @@ const testParameters = [
                     hex: '#9492ab'
                 },
                 interpretation: 'Exceptionally High Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
@@ -1068,6 +1165,7 @@ const testParameters = [
                     hex: '#fff2d9'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -1077,6 +1175,7 @@ const testParameters = [
                     hex: '#fcccb9'
                 },
                 interpretation: 'Normal Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -1086,6 +1185,7 @@ const testParameters = [
                     hex: '#f9aea0'
                 },
                 interpretation: 'Considered Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1095,6 +1195,7 @@ const testParameters = [
                     hex: '#f8a691'
                 },
                 interpretation: 'Considered Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1104,6 +1205,7 @@ const testParameters = [
                     hex: '#f19982'
                 },
                 interpretation: 'Considered Extreme Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ],
@@ -1121,6 +1223,7 @@ const testParameters = [
                     hex: '#f7b7cc'
                 },
                 interpretation: 'Normal (Negative) Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -1130,6 +1233,7 @@ const testParameters = [
                     hex: '#eab3cc'
                 },
                 interpretation: 'Standard Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -1139,6 +1243,7 @@ const testParameters = [
                     hex: '#deafcb'
                 },
                 interpretation: 'High End of Standard Range',
+                range: 'Within Range',
                 clarification: {}
             },
             {
@@ -1148,6 +1253,7 @@ const testParameters = [
                     hex: '#d4bed6'
                 },
                 interpretation: 'Excessive Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1157,6 +1263,7 @@ const testParameters = [
                     hex: '#bcc0da'
                 },
                 interpretation: 'Elevated Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1166,6 +1273,7 @@ const testParameters = [
                     hex: '#b0bcda'
                 },
                 interpretation: 'Highly Elevated Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
             {
@@ -1175,56 +1283,10 @@ const testParameters = [
                     hex: '#94c5e3'
                 },
                 interpretation: 'Extreme Range',
+                range: 'Outside of Range',
                 clarification: {}
             },
         ]
-    },
-    {
-        id: 21,
-        name: 'Nitrite',
-        imageUrl: '',
-        info: '',
-        valueRanges: [
-            {
-                correspondingValue: 'Neg',
-                referenceColor: {
-                    hex: '#fffde7',
-                    // rgb: { r: 255, g: 255, b: 255 },
-                    // hsv: { h: 60, s: 100, v: 100 }
-                },
-                interpretation: 'Normal Range',
-                clarification: {
-                    // healthy: { color: 'green' },
-                    // unhealthy: { color: 'red' }
-                }, // healthy/unhealthy for text color 
-            },
-            {
-                correspondingValue: 'Positive (light pink)',
-                referenceColor: {
-                    hex: '#fee7dc',
-                    // rgb: { r: 255, g: 255, b: 255 },
-                    // hsv: { h: 60, s: 100, v: 100 }
-                },
-                interpretation: 'Moderate (Positive) Range',
-                clarification: {
-                    // healthy: { color: 'green' },
-                    // unhealthy: { color: 'red' }
-                }, // healthy/unhealthy for text color 
-            },
-            {
-                correspondingValue: 'Positive (dark pink)',
-                referenceColor: {
-                    hex: '#fcdee1',
-                    // rgb: { r: 255, g: 255, b: 255 },
-                    // hsv: { h: 60, s: 100, v: 100 }
-                },
-                interpretation: 'Extreme (Positive) Range',
-                clarification: {
-                    // healthy: { color: 'green' },
-                    // unhealthy: { color: 'red' }
-                }, // healthy/unhealthy for text color 
-            },
-        ],
     },
 
 ]; // all parameters
@@ -1249,7 +1311,7 @@ const testsConfig = {
 
 function save(options, callback) {
     get(options, (error, result) => {
-        if (result && result.data && result.data.id) {
+        if (result && result.id) {
             buildfire.datastore.searchAndUpdate(
                 { '$json.name': { '$eq': options.parameter.name } },
                 options.parameter,
@@ -1295,8 +1357,17 @@ function getAll(callback) {
             const matchingParam = results.find(p => p.data?.name === param?.name);
             if (matchingParam) {
                 param.imageUrl = matchingParam.data?.imageUrl || '';
+                param.info = matchingParam.data?.info || '';
+                const savedRanges = matchingParam.data?.valueRanges || [];
+                if (param.valueRanges) {
+                    param.valueRanges.forEach(range => {
+                        const match = savedRanges.find(r => r.correspondingValue === range.correspondingValue);
+                        if (match) range.info = match.info || '';
+                    });
+                }
             }
         }
+        console.warn('!!!!!!!!!!getAll merged:',allParameters);
         callback(null, allParameters);
     });
 }
@@ -1312,7 +1383,7 @@ function _getAll(callback) {
     function fetchBatch() {
         buildfire.datastore.search(
             {
-                fields: ['id', 'name', 'imageUrl'],
+                fields: ['id', 'name', 'imageUrl', 'info', 'valueRanges'],
                 skip: skip,
                 limit: limit
             },

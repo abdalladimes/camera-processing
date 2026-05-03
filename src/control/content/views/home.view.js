@@ -68,7 +68,6 @@ function init() {
         testsConfigService.getAll((error, allParameters) => {
             if (error) {
                 console.error('Error fetching all parameters', error);
-                resolve();
                 return;
             }
             state.allParameters = allParameters;
@@ -96,9 +95,6 @@ function init() {
             });
         }
     }
-
-    controlListView.onAddButtonClick = () => {
-    };
 
 }
 

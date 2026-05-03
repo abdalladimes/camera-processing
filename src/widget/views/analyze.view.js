@@ -53,7 +53,9 @@ function init(options) {
 function getTestParameters(test) {
     let parameters = {};
     for (let parameterName of Object.keys(test[state.testName].parameters)) {
-        parameters[parameterName] = testsConfigService.getLocalParameter(parameterName);
+        const param = testsConfigService.getLocalParameter(parameterName);
+        if (!param) continue;
+        parameters[parameterName] = param;
         parameters[parameterName].locationOnOverlay = test[state.testName].parameters[parameterName].locationOnOverlay;
     }
     return parameters;
@@ -77,9 +79,11 @@ function processCameraImage(imageSrc, imageAsData) {
         // TODO: reject on blurry image
         document.getElementById('isBlurry').innerHTML = (isBlurry ? `(Blurry)` : `(Sharp)`);
         const extractedColors = getParameterColorsFromImage(imgElement);
+        drawSamplingPoints(imgElement);
         const results = getResultsFromExtractedColors(extractedColors, state.parameters);
         document.getElementById('extractedColors').innerHTML = JSON.stringify(extractedColors, null, 2);
         document.getElementById('results').innerHTML = JSON.stringify(results, null, 2);
+        renderReadableResults(results, state.parameters);
 
     };
     if (imageAsData) {
@@ -89,49 +93,65 @@ function processCameraImage(imageSrc, imageAsData) {
     }
 }
 
+function drawSamplingPoints(imgElement) {
+    var src = cv.imread(imgElement);
+    var imageHeight = src.rows;
+    var imageWidth = src.cols;
+    var scaleY = imageHeight / state.overlayImage.height;
+    var overlayWidthScaled = state.overlayImage.width * scaleY;
+    var imageCenterX = imageWidth / 2;
+    var overlayLeftX = imageCenterX - (overlayWidthScaled / 2);
+
+    for (var boxKey in state.parameters) {
+        var box = state.parameters[boxKey].locationOnOverlay;
+        var centerX = Math.round((box.center.x * scaleY) + overlayLeftX);
+        var centerY = Math.round(box.center.y * scaleY);
+        var radius = Math.round(box.samplingOffsetRadius * scaleY);
+        var center = new cv.Point(centerX, centerY);
+        cv.circle(src, center, radius, [0, 255, 0, 255], 2);
+        cv.putText(src, boxKey.substring(0, 4), new cv.Point(centerX + radius + 5, centerY + 5), cv.FONT_HERSHEY_SIMPLEX, 0.5, [0, 255, 0, 255], 1);
+    }
+
+    var canvas = document.getElementById('canvasOutput');
+    cv.imshow(canvas, src);
+    src.delete();
+}
+
 function getResultsFromExtractedColors(extractedColors, parameters) {
     const results = {};
 
     for (const parameterKey in extractedColors) {
         const extractedColor = extractedColors[parameterKey];
         const parameter = parameters[parameterKey];
-        console.warn(`Analyzing parameter: `, parameter);
-        if (parameter) {
-            // 1. Convert the extracted OpenCV color to CIELAB space
-            const extractedLab = rgbToLab(extractedColor.r, extractedColor.g, extractedColor.b);
+        if (!parameter) continue;
 
-            const parameterValueRanges = parameter.valueRanges;
-            let closestMatch = null;
-            let lowestDeltaE = Infinity;
-            let bestMatchRgb = null;
+        const extractedLab = rgbToLab(extractedColor.r, extractedColor.g, extractedColor.b);
+        let closestMatch = null;
+        let lowestDeltaE = Infinity;
+        let bestMatchRgb = null;
 
-            // 2. Loop through ALL reference colors to find the absolute closest one
-            for (const valueRange of parameterValueRanges) {
-                const referenceColorRgb = hexToRgba(valueRange.referenceColor.hex);
-                const referenceLab = rgbToLab(referenceColorRgb.r, referenceColorRgb.g, referenceColorRgb.b);
-
-                // Calculate the visual distance
-                const currentDeltaE = calculateDeltaE(extractedLab, referenceLab);
-
-                // If this is the lowest distance we've seen, save it
-                if (currentDeltaE < lowestDeltaE) {
-                    lowestDeltaE = currentDeltaE;
-                    closestMatch = valueRange;
-                    bestMatchRgb = referenceColorRgb;
-                }
+        for (const valueRange of parameter.valueRanges) {
+            const referenceColorRgb = hexToRgba(valueRange.referenceColor.hex);
+            const referenceLab = rgbToLab(referenceColorRgb.r, referenceColorRgb.g, referenceColorRgb.b);
+            const currentDeltaE = calculateDeltaE(extractedLab, referenceLab);
+            if (currentDeltaE < lowestDeltaE) {
+                lowestDeltaE = currentDeltaE;
+                closestMatch = valueRange;
+                bestMatchRgb = referenceColorRgb;
             }
+        }
 
-            // 3. Evaluate if the absolute closest match is close enough to be valid
-            if (closestMatch && lowestDeltaE) {
-                results[parameterKey] = {
-                    value: closestMatch.correspondingValue,
-                    interpretation: closestMatch.interpretation,
-                    clarification: closestMatch.clarification,
-                    referenceColor: closestMatch.referenceColor.hex,
-                    referenceColorRgb: bestMatchRgb,
-                    deltaE_Score: lowestDeltaE // Added for debugging and confidence checks
-                };
-            }
+        if (closestMatch && lowestDeltaE) {
+            results[parameterKey] = {
+                value: closestMatch.correspondingValue,
+                interpretation: closestMatch.interpretation,
+                range: closestMatch.range || 'Unknown',
+                clarification: closestMatch.clarification,
+                referenceColor: closestMatch.referenceColor.hex,
+                referenceColorRgb: bestMatchRgb,
+                extractedColor: extractedColor,
+                deltaE_Score: lowestDeltaE
+            };
         }
     }
 
@@ -202,41 +222,22 @@ function getParameterColorsFromImage(imgElement) {
     for (const boxKey in state.parameters) {
         const box = state.parameters[boxKey].locationOnOverlay;
 
-        // 1. Calculate the exact center and radius (matching the drawing function)
         const centerX = (box.center.x * scaleY) + overlayLeftX;
         const centerY = (box.center.y * scaleY);
         const radius = Math.round(box.samplingOffsetRadius * scaleY);
 
-        // 2. Calculate the rectangular bounding box that contains this circle
         const startX = Math.max(0, Math.min(Math.round(centerX - radius), imageWidth - 1));
         const startY = Math.max(0, Math.min(Math.round(centerY - radius), imageHeight - 1));
         const endX = Math.max(0, Math.min(Math.round(centerX + radius), imageWidth - 1));
         const endY = Math.max(0, Math.min(Math.round(centerY + radius), imageHeight - 1));
 
-        const rectWidth = Math.max(1, endX - startX);
-        const rectHeight = Math.max(1, endY - startY);
-
-        // 3. Extract the rectangular ROI
-        const rect = new cv.Rect(startX, startY, rectWidth, rectHeight);
+        const rect = new cv.Rect(startX, startY, Math.max(1, endX - startX), Math.max(1, endY - startY));
         const roiMat = openCvImage.roi(rect);
 
-        // 4. Create a 1-channel (grayscale) mask of the same size, filled with black (0)
         const mask = new cv.Mat.zeros(roiMat.rows, roiMat.cols, cv.CV_8UC1);
+        cv.circle(mask, new cv.Point(Math.round(centerX) - startX, Math.round(centerY) - startY), radius, [255, 0, 0, 0], -1);
 
-        // Find where the center of the circle is relative to the small ROI we just cut out
-        const maskCenterX = Math.round(centerX) - startX;
-        const maskCenterY = Math.round(centerY) - startY;
-        const maskCenterPoint = new cv.Point(maskCenterX, maskCenterY);
-
-        // Draw a filled white circle on the mask. 
-        // -1 thickness tells OpenCV to fill the shape.
-        cv.circle(mask, maskCenterPoint, radius, [255, 0, 0, 0], -1);
-
-        // 5. Get the average color of the region, passing the mask to ignore corners
-        // cv.median returns an array-like object: [R, G, B, A]
-        const meanColor = cv.median(roiMat, mask);
-
-        // Store the color
+        const meanColor = cv.mean(roiMat, mask);
         extractedColors[boxKey] = {
             r: Math.round(meanColor[0]),
             g: Math.round(meanColor[1]),
@@ -244,7 +245,6 @@ function getParameterColorsFromImage(imgElement) {
             a: Math.round(meanColor[3])
         };
 
-        // 6. Clean up memory for both the ROI and the Mask
         roiMat.delete();
         mask.delete();
     }
@@ -366,12 +366,35 @@ function rgbToLab(r, g, b) {
     };
 }
 
-// Calculates the Delta E distance between two Lab colors
+// CIE76 Delta E — Euclidean distance in CIELAB (L weight reduced to prioritize hue over brightness)
 function calculateDeltaE(lab1, lab2) {
     let deltaL = lab1.L - lab2.L;
     let deltaA = lab1.a - lab2.a;
     let deltaB = lab1.b - lab2.b;
     return Math.sqrt((deltaL * deltaL) + (deltaA * deltaA) + (deltaB * deltaB));
+}
+
+function renderReadableResults(results, parameters) {
+    var container = document.getElementById('readableResults');
+    container.innerHTML = '<h3 style="margin-bottom:8px;">Urine Data</h3>';
+    for (var name in results) {
+        var r = results[name];
+        var range = r.range || 'Unknown';
+        var color = '#f5a623';
+        if (range === 'Within Range') color = '#4caf50';
+        else if (range === 'Outside of Range') color = '#e53935';
+        else if (range === 'Below Range') color = '#f5a623';
+        var row = document.createElement('div');
+        row.style.cssText = 'padding:10px 0; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;';
+        row.innerHTML = '<div><strong>' + name + '</strong>' +
+            '<br><span style="color:' + color + '; font-size:14px;">' + range + '</span>' +
+            ' <span style="color:#666; font-size:12px;">(' + r.interpretation + ' - ' + r.value + ')</span></div>' +
+            '<div style="display:flex; flex-direction:column; align-items:center; gap:2px;">' +
+            '<div style="width:20px; height:20px; border-radius:50%; background:' + r.referenceColor + '; border:1px solid #ddd;"></div>' +
+            '<div style="width:20px; height:20px; border-radius:50%; background:rgb(' + r.extractedColor.r + ',' + r.extractedColor.g + ',' + r.extractedColor.b + '); border:1px solid #ddd;"></div>' +
+            '</div>';
+        container.appendChild(row);
+    }
 }
 
 export default { init }

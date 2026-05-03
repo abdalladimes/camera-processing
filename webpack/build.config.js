@@ -136,6 +136,10 @@ const WebpackConfig = {
         ], {
             ignore: ['*.js', '*.html', '*.md']
         }),
+        new CopyWebpackPlugin([{
+            from: path.join(__dirname, '../src/widget/lib'),
+            to: path.join(__dirname, '../dist/widget/lib'),
+        }]),
         new ExtractTextPlugin('[name].css'),
         new ZipWebpackPlugin({
             path: path.join(__dirname, '../'),
