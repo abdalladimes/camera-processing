@@ -12,6 +12,12 @@ let state = {
 }
 let elements = {};
 
+let _isProcessing = false;
+let _lastValidation = null;
+let _frameAccepted = false;
+let _captureTimeout = null;
+const CAPTURE_TIMEOUT_MS = 10000;
+
 function init(options) {
     state.test = options?.test || null;
     state.testName = state.test ? Object.keys(state.test)[0] : null;
@@ -27,27 +33,73 @@ function init(options) {
         elements[selectorKey] = document.querySelector(selector);
     });
 
+    startCameraCapture();
+
+    document.getElementById('retryButton').addEventListener('click', () => {
+        if (_captureTimeout) { clearTimeout(_captureTimeout); _captureTimeout = null; }
+        _frameAccepted = false;
+        _lastValidation = null;
+        _isProcessing = false;
+        startCameraCapture();
+    });
+}
+
+function startCameraCapture() {
+    _frameAccepted = false;
+    _lastValidation = null;
+    _isProcessing = false;
+
+    if (_captureTimeout) clearTimeout(_captureTimeout);
+    _captureTimeout = setTimeout(() => {
+        if (!_frameAccepted) {
+            console.log('!!!!!!!!!!!⏰ Capture timeout — no valid frame in ' + CAPTURE_TIMEOUT_MS/1000 + 's. Stopping.');
+            _frameAccepted = true;
+            buildfire.services.camera.stopAutoCapture({}, () => {});
+        }
+    }, CAPTURE_TIMEOUT_MS);
+
+    // Register continuous frame handler (event-based, fires repeatedly)
+    buildfire.services.camera.onFrame((err, imageData) => {
+        if (_frameAccepted) return;
+        if (_isProcessing) return;
+        _isProcessing = true;
+        console.log('!!!!!!!!!!!📸 Frame received, validating...');
+        validateAndProcess(imageData);
+    });
+
+    // Open camera — callback only fires for cancel/error
     getImageFromCamera({
         overlayImageUrl: state.overlayImage.url
     }, (error, imageData) => {
         if (error) {
-            console.error(error);
-            return;
+            console.error('Camera closed/cancelled:', error);
+            _frameAccepted = true;
+            if (_captureTimeout) { clearTimeout(_captureTimeout); _captureTimeout = null; }
         }
-        processCameraImage(imageData, true);
     });
+}
 
-    document.getElementById('retryButton').addEventListener('click', () => {
-        getImageFromCamera({
-            overlayImageUrl: state.overlayImage.url
-        }, (error, imageData) => {
-            if (error) {
-                console.error(error);
-                return;
-            }
-            processCameraImage(imageData, true);
-        });
-    });
+function validateAndProcess(imageSrc) {
+    const imgElement = new Image();
+    imgElement.onload = function () {
+        const validation = validateFrame(imgElement);
+        console.log('!!!!!!!!!!!🔍 Frame validation:', JSON.stringify(validation));
+
+        if (validation.valid) {
+            _frameAccepted = true;
+            if (_captureTimeout) { clearTimeout(_captureTimeout); _captureTimeout = null; }
+            console.log('!!!!!!!!!!!✅ Frame accepted! Stopping screenshots and processing...');
+            buildfire.services.camera.stopAutoCapture({}, () => {});
+            processCameraImage(imageSrc, true);
+        } else {
+            _isProcessing = false;
+        }
+    };
+    imgElement.onerror = function () {
+        console.log('!!!!!!!!!!!❌ Image failed to load');
+        _isProcessing = false;
+    };
+    imgElement.src = `data:image/jpeg;base64,${imageSrc}`;
 }
 
 function getTestParameters(test) {
@@ -115,6 +167,118 @@ function drawSamplingPoints(imgElement) {
     var canvas = document.getElementById('canvasOutput');
     cv.imshow(canvas, src);
     src.delete();
+}
+
+// Validates a frame by checking Ascorbate + Zinc match known colors and brightness is acceptable
+// Uses consistency check — two consecutive frames must agree
+function validateFrame(imgElement) {
+    const DELTA_E_THRESHOLD = 10;
+    const MIN_BRIGHTNESS = 120;
+    const MAX_BRIGHTNESS = 220;
+
+    // 1. Check brightness
+    const lighting = analyzeLighting(imgElement);
+    if (lighting.brightness < MIN_BRIGHTNESS || lighting.brightness > MAX_BRIGHTNESS) {
+        _lastValidation = null;
+        return { valid: false, reason: 'brightness', brightness: lighting.brightness };
+    }
+
+    // 2. Extract colors for Ascorbate and Zinc only
+    const checkParams = ['Ascorbate', 'Zinc'];
+    const extractedColors = extractColorsForParameters(imgElement, checkParams);
+
+    // 3. Check each against all its calibrated levels
+    const currentMatches = {};
+    for (const paramName of checkParams) {
+        const color = extractedColors[paramName];
+        if (!color) {
+            _lastValidation = null;
+            return { valid: false, reason: 'missing_' + paramName };
+        }
+
+        const parameter = state.parameters[paramName];
+        if (!parameter) {
+            _lastValidation = null;
+            return { valid: false, reason: 'no_param_' + paramName };
+        }
+
+        const extractedLab = rgbToLab(color.r, color.g, color.b);
+        let lowestDeltaE = Infinity;
+        let bestMatch = null;
+
+        for (const valueRange of parameter.valueRanges) {
+            const refHex = valueRange.referenceColor.hex;
+            if (refHex === '#000000') continue;
+            const refRgb = hexToRgba(refHex);
+            const refLab = rgbToLab(refRgb.r, refRgb.g, refRgb.b);
+            const dE = calculateDeltaE(extractedLab, refLab);
+            if (dE < lowestDeltaE) {
+                lowestDeltaE = dE;
+                bestMatch = valueRange.correspondingValue;
+            }
+        }
+
+        if (lowestDeltaE > DELTA_E_THRESHOLD) {
+            _lastValidation = null;
+            return { valid: false, reason: paramName + '_no_match', deltaE: lowestDeltaE };
+        }
+
+        currentMatches[paramName] = bestMatch;
+    }
+
+    // 4. Consistency check — compare with previous frame
+    if (_lastValidation
+        && _lastValidation.Ascorbate === currentMatches.Ascorbate
+        && _lastValidation.Zinc === currentMatches.Zinc) {
+        _lastValidation = null;
+        return { valid: true, brightness: lighting.brightness, matches: currentMatches };
+    }
+
+    // Store for next frame comparison
+    _lastValidation = currentMatches;
+    return { valid: false, reason: 'waiting_for_consistency', matches: currentMatches };
+}
+
+// Extracts colors for specific parameter names only (faster than all 20)
+function extractColorsForParameters(imgElement, paramNames) {
+    const openCvImage = cv.imread(imgElement);
+    cv.GaussianBlur(openCvImage, openCvImage, new cv.Size(5, 5), 0, 0, cv.BORDER_DEFAULT);
+    const imageHeight = openCvImage.rows;
+    const imageWidth = openCvImage.cols;
+    const scaleY = imageHeight / state.overlayImage.height;
+    const overlayWidthScaled = state.overlayImage.width * scaleY;
+    const imageCenterX = imageWidth / 2;
+    const overlayLeftX = imageCenterX - (overlayWidthScaled / 2);
+    const extractedColors = {};
+
+    for (const boxKey of paramNames) {
+        const param = state.parameters[boxKey];
+        if (!param) continue;
+        const box = param.locationOnOverlay;
+        const centerX = (box.center.x * scaleY) + overlayLeftX;
+        const centerY = (box.center.y * scaleY);
+        const radius = Math.round(box.samplingOffsetRadius * scaleY);
+        const startX = Math.max(0, Math.min(Math.round(centerX - radius), imageWidth - 1));
+        const startY = Math.max(0, Math.min(Math.round(centerY - radius), imageHeight - 1));
+        const endX = Math.max(0, Math.min(Math.round(centerX + radius), imageWidth - 1));
+        const endY = Math.max(0, Math.min(Math.round(centerY + radius), imageHeight - 1));
+        const rect = new cv.Rect(startX, startY, Math.max(1, endX - startX), Math.max(1, endY - startY));
+        const roiMat = openCvImage.roi(rect);
+        const mask = new cv.Mat.zeros(roiMat.rows, roiMat.cols, cv.CV_8UC1);
+        cv.circle(mask, new cv.Point(Math.round(centerX) - startX, Math.round(centerY) - startY), radius, [255, 0, 0, 0], -1);
+        const meanColor = cv.mean(roiMat, mask);
+        extractedColors[boxKey] = {
+            r: Math.round(meanColor[0]),
+            g: Math.round(meanColor[1]),
+            b: Math.round(meanColor[2]),
+            a: Math.round(meanColor[3])
+        };
+        roiMat.delete();
+        mask.delete();
+    }
+
+    openCvImage.delete();
+    return extractedColors;
 }
 
 function getResultsFromExtractedColors(extractedColors, parameters) {
@@ -397,7 +561,7 @@ function renderReadableResults(results, parameters) {
     }
 }
 
-export default { init }
+export default { init, validateFrame }
 
 let extractedColors = {
     Ascorbate: {
