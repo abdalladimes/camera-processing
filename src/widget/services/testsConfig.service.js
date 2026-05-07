@@ -1356,114 +1356,106 @@ const testParameters = [
 ]; // all parameters
 
 const testsConfig = {
-    "complete 20-n-1": { // used in UI (comes from QR scanner)
-        duration: 60, // seconds
-        overlayImage: {
-            url: './resources/height_blank.png',
-            width: 185,
-            height: 1059,
-        },
+    // "20-n-1": {
+    //     duration: 60,
+    //     overlayImage: {
+    //         url: './resources/height_blank.png',
+    //         width: 185,
+    //         height: 1059,
+    //     },
+    //     parameters: {
+    //         'Ascorbate': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'BHB': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Bilirubin': { locationOnOverlay: { center: { y: 210, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Blood': { locationOnOverlay: { center: { y: 290, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Calcium': { locationOnOverlay: { center: { y: 370, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Creatinine': { locationOnOverlay: { center: { y: 455, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Free Radical': { locationOnOverlay: { center: { y: 540, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Glucose': { locationOnOverlay: { center: { y: 630, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Ketone': { locationOnOverlay: { center: { y: 725, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Leukocytes': { locationOnOverlay: { center: { y: 820, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Magnesium': { locationOnOverlay: { center: { y: 55, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Micro Albumin': { locationOnOverlay: { center: { y: 135, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Nitrities': { locationOnOverlay: { center: { y: 210, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'pH': { locationOnOverlay: { center: { y: 290, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Protein': { locationOnOverlay: { center: { y: 370, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Sodium (Salinity)': { locationOnOverlay: { center: { y: 455, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Specific Gravity': { locationOnOverlay: { center: { y: 540, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Uric Acid': { locationOnOverlay: { center: { y: 630, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Urobilinogen': { locationOnOverlay: { center: { y: 725, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Zinc': { locationOnOverlay: { center: { y: 820, x: 145 }, samplingOffsetRadius: 15 } },
+    //     }
+    // },
+    "14-n-1": {
+        duration: 60,
+        overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },
         parameters: {
-            'Ascorbate': { // parameter exact name (string as test name) will be used in datastore also and UI
-                locationOnOverlay: {
-                    center: { y: 55, x: 35 }, samplingOffsetRadius: 15 // has the samplingBoxSizePercentage already multiplied in it
-                },
-            },
-            'BHB': {
-                locationOnOverlay: {
-                    center: { y: 135, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Bilirubin': {
-                locationOnOverlay: {
-                    center: { y: 210, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Blood': {
-                locationOnOverlay: {
-                    center: { y: 290, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Calcium': {
-                locationOnOverlay: {
-                    center: { y: 370, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Creatinine': {
-                locationOnOverlay: {
-                    center: { y: 455, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Free Radical': {
-                locationOnOverlay: {
-                    center: { y: 540, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Glucose': {
-                locationOnOverlay: {
-                    center: { y: 630, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Ketone': {
-                locationOnOverlay: {
-                    center: { y: 725, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Leukocytes': {
-                locationOnOverlay: {
-                    center: { y: 820, x: 35 }, samplingOffsetRadius: 15
-                },
-            },
-            'Magnesium': {
-                locationOnOverlay: {
-                    center: { y: 55, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'Micro Albumin': {
-                locationOnOverlay: {
-                    center: { y: 135, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'Nitrities': {
-                locationOnOverlay: {
-                    center: { y: 210, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'pH': {
-                locationOnOverlay: {
-                    center: { y: 290, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'Protein': {
-                locationOnOverlay: {
-                    center: { y: 370, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'Sodium (Salinity)': {
-                locationOnOverlay: {
-                    center: { y: 455, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'Specific Gravity': {
-                locationOnOverlay: {
-                    center: { y: 540, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'Uric Acid': {
-                locationOnOverlay: {
-                    center: { y: 630, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'Urobilinogen': {
-                locationOnOverlay: {
-                    center: { y: 725, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
-            'Zinc': {
-                locationOnOverlay: {
-                    center: { y: 820, x: 145 }, samplingOffsetRadius: 15
-                },
-            },
+            'Ascorbate': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
+            'BHB': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
+            'Bilirubin': { locationOnOverlay: { center: { y: 210, x: 35 }, samplingOffsetRadius: 15 } },
+            'Free Radical': { locationOnOverlay: { center: { y: 290, x: 35 }, samplingOffsetRadius: 15 } },
+            'pH': { locationOnOverlay: { center: { y: 370, x: 35 }, samplingOffsetRadius: 15 } },
+            'Protein': { locationOnOverlay: { center: { y: 455, x: 35 }, samplingOffsetRadius: 15 } },
+            'Ketone': { locationOnOverlay: { center: { y: 540, x: 35 }, samplingOffsetRadius: 15 } },
+            'Leukocytes': { locationOnOverlay: { center: { y: 630, x: 35 }, samplingOffsetRadius: 15 } },
+            'Magnesium': { locationOnOverlay: { center: { y: 725, x: 35 }, samplingOffsetRadius: 15 } },
+            'Micro Albumin': { locationOnOverlay: { center: { y: 55, x: 145 }, samplingOffsetRadius: 15 } },
+            'Nitrities': { locationOnOverlay: { center: { y: 135, x: 145 }, samplingOffsetRadius: 15 } },
+            'Sodium (Salinity)': { locationOnOverlay: { center: { y: 210, x: 145 }, samplingOffsetRadius: 15 } },
+            'Uric Acid': { locationOnOverlay: { center: { y: 290, x: 145 }, samplingOffsetRadius: 15 } },
+            'Urobilinogen': { locationOnOverlay: { center: { y: 370, x: 145 }, samplingOffsetRadius: 15 } },
+        }
+    },
+    // "12-n-1": {
+    //     duration: 60,
+    //     overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },
+    //     parameters: {
+    //         'Ascorbate': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Bilirubin': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Free Radical': { locationOnOverlay: { center: { y: 210, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Leukocytes': { locationOnOverlay: { center: { y: 290, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Magnesium': { locationOnOverlay: { center: { y: 370, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Micro Albumin': { locationOnOverlay: { center: { y: 455, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Nitrities': { locationOnOverlay: { center: { y: 540, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'pH': { locationOnOverlay: { center: { y: 630, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Protein': { locationOnOverlay: { center: { y: 725, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Specific Gravity': { locationOnOverlay: { center: { y: 820, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Uric Acid': { locationOnOverlay: { center: { y: 55, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Urobilinogen': { locationOnOverlay: { center: { y: 135, x: 145 }, samplingOffsetRadius: 15 } },
+    //     }
+    // },
+    // "4-n-1": {
+    //     duration: 90,
+    //     overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },
+    //     parameters: {
+    //         'Leukocytes': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Nitrities': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'pH': { locationOnOverlay: { center: { y: 210, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Protein': { locationOnOverlay: { center: { y: 290, x: 35 }, samplingOffsetRadius: 15 } },
+    //     }
+    // },
+    // "3-n-1": {
+    //     duration: 60,
+    //     overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },
+    //     parameters: {
+    //         'BHB': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Ketone': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'pH': { locationOnOverlay: { center: { y: 210, x: 35 }, samplingOffsetRadius: 15 } },
+    //     }
+    // },
+    // "2-n-1": {
+    //     duration: 40,
+    //     overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },
+    //     parameters: {
+    //         'BHB': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Ketone': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
+    //     }
+    // },
+    "Free Single Pad Ketone Test": {
+        duration: 40,
+        overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },
+        parameters: {
+            'Ketone': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
         }
     }
 }

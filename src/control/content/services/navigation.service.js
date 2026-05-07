@@ -90,7 +90,6 @@ function navigateWidget(options, callback) {
     }
     setTimeout(() => {
         buildfire.messaging.sendMessageToWidget({ event: 'navigation', type: options.navigationType, options: { title: options.template, data: options.data } });
-
     }, 0);
 
 }

@@ -1,13 +1,12 @@
 import navigationService from '../services/navigation.service';
 import testsConfigService from '../services/testsConfig.service';
 import historyService from '../services/history.service';
-import timer from './timer.view';
 const config = {
     datastoreTag: 'config',
     selectors: {
         introductionWysiwyg: '#introductionWysiwyg',
         timerWysiwyg: '#timerWysiwyg',
-        scanQRButton: '#scanQRButton',
+        takeTestBtn: '#takeTestBtn',
         historyBtn: '#historyBtn',
     }
 }
@@ -31,7 +30,6 @@ function init() {
     });
 
 
-    applyBodyMarginBottom();
     buildfire.datastore.onUpdate((event) => {
         console.log('Data has been updated ', event);
         if (event && event.tag === config.datastoreTag) {
@@ -49,35 +47,13 @@ function init() {
         buildfire.spinner.hide();
     });
 
-    elements.scanQRButton.addEventListener('click', () => {
-        navigationService.push({
-            template: 'timer', view: timer, data: {
-                test: {
-                    [Object.keys(testsConfigService.testsConfig)[0]]: testsConfigService.testsConfig[Object.keys(testsConfigService.testsConfig)[0]],
-                }
-            }
-        }, (err) => { });
+    elements.takeTestBtn.addEventListener('click', () => {
+        navigationService.push({ template: 'selectTest' });
     });
     elements.historyBtn.addEventListener('click', () => {
         navigationService.push({ template: 'history' }, (err) => { });
     });
 }
 
-function handleQRScanResult(result) { // TODO: for QR
-    if (result && result.text) {
-        for (const test of Object.keys(testsConfigService.testsConfig)) {
-            if (result.text.toLowerCase().includes(test.toLowerCase())) {
-                navigationService.push({ template: 'timer', data: { test: test } }, (err) => { });
-            }
-        }
-    }
-}
-
-function applyBodyMarginBottom() {
-    const rootStyles = window.getComputedStyle(document.documentElement);
-    const scanButtonMArginBottom = rootStyles.getPropertyValue('--scan-btn-margin-bottom');
-    const scanBttonHeight = elements.scanQRButton.offsetHeight;
-    document.body.style.height = `calc(100% - (${scanButtonMArginBottom} + ${scanBttonHeight}px))`;
-}
 
 export default { init }

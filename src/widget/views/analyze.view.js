@@ -20,10 +20,10 @@ const CAPTURE_TIMEOUT_MS = 10000;
 
 function init(options) {
     state.test = options?.test || null;
-    state.testName = state.test ? Object.keys(state.test)[0] : null;
+    state.testName = state.test ? state.test.name : null;
 
     if (state.test) {
-        state.overlayImage = state.test[state.testName]?.overlayImage || {};
+        state.overlayImage = state.test.config?.overlayImage || {};
         state.parameters = getTestParameters(state.test);
     }
 
@@ -104,11 +104,11 @@ function validateAndProcess(imageSrc) {
 
 function getTestParameters(test) {
     let parameters = {};
-    for (let parameterName of Object.keys(test[state.testName].parameters)) {
+    for (let parameterName of Object.keys(test.config.parameters)) {
         const param = testsConfigService.getLocalParameter(parameterName);
         if (!param) continue;
         parameters[parameterName] = param;
-        parameters[parameterName].locationOnOverlay = test[state.testName].parameters[parameterName].locationOnOverlay;
+        parameters[parameterName].locationOnOverlay = test.config.parameters[parameterName].locationOnOverlay;
     }
     return parameters;
 }

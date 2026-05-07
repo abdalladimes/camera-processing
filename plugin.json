@@ -1,8 +1,9 @@
 {
   "author":"Daniel Hindi"
-,"pluginName":"image test webpack [Webpack]"
+,"pluginName":"Nurse Hatty [Amjad]"
 ,"pluginDescription":"Bare bones plugin showing simple autonomy of a plugin"
 ,"supportEmail":"devSupport@buildfire.com"
+,"webpack": 8080
 ,"control":{
   "content":{
     "enabled":true

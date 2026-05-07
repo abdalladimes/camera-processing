@@ -24,10 +24,12 @@ function init(options) {
         elements[selectorKey] = document.querySelector(selector);
     });
     if (options && options.test) {
-        elements.testName.innerText = Object.keys(options.test)[0];
-        if (!buildfire.isWeb()) { // only start timer on devices
-            const dynamicData = options.test[Object.keys(options.test)[0]];
-            startTimer(dynamicData.duration);
+        config.test = options.test;
+        elements.testName.innerText = 'Urine ' + options.test.name;
+        const duration = options.test.config.duration || 60;
+        elements.timeDisplay.textContent = formatTime(duration);
+        if (!buildfire.isWeb()) {
+            startTimer(duration);
         }
     } else {
         elements.testName.innerText = 'Test Title';
@@ -103,8 +105,7 @@ function startTimer(timeLeft = 60) {
     }
 
     // 2. IMMEDIATELY update the text
-    let initialSeconds = timeLeft < 10 ? '0' + timeLeft : timeLeft;
-    elements.timeDisplay.textContent = `0:${initialSeconds}`;
+    elements.timeDisplay.textContent = formatTime(timeLeft);
 
     // 3. Hard reset the animation AND the visual state
     // Explicitly setting the offset to 0 guarantees it becomes a full ring again
@@ -120,15 +121,19 @@ function startTimer(timeLeft = 60) {
     // 6. Start the fresh countdown
     config.countdownInterval = setInterval(() => {
         timeLeft--;
-
-        let seconds = timeLeft < 10 ? '0' + timeLeft : timeLeft;
-        elements.timeDisplay.textContent = `0:${seconds}`;
+        elements.timeDisplay.textContent = formatTime(timeLeft);
 
         if (timeLeft <= 0) {
             clearInterval(config.countdownInterval);
             navigateToCameraAnalyze();
         }
     }, 1000);
+}
+
+function formatTime(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
 }
 
 

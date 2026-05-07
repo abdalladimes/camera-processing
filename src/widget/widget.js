@@ -1,6 +1,7 @@
 import buildfire from 'buildfire';
 import navigationService from './services/navigation.service.js';
 import viewsService from './services/views.service.js';
+import './style.css';
 
 const { push, pop, onPopHandler, goHome } = navigationService;
 

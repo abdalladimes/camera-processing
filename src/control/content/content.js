@@ -1,5 +1,6 @@
 import navigationService from './services/navigation.service';
 import viewsService from './services/views.service';
+import './style.css';
 const { push, pop } = navigationService;
 
 function init() {

@@ -1292,7 +1292,7 @@ const testParameters = [
 ]; // all parameters
 
 const testsConfig = {
-    'complete 20-n-1': { // used in UI (comes from QR scanner)
+    '20-n-1': { // used in UI (comes from QR scanner)
         duration: 60, // seconds
         overlayImage: {
             url: '',

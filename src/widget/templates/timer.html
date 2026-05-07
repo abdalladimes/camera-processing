@@ -1,15 +1,20 @@
 <template>
-    <div id="testName"></div>
-    <div id="timerWysiwyg"></div>
-    <div class="timer-wrapper">
-        <div class="circular-timer">
-            <svg class="progress-ring" id="progressCircle" width="240" height="240">
-                <circle id="progressRingCircle" stroke="#422f64" stroke-width="12" fill="transparent" r="110"
-                    cx="120" cy="120" />
-            </svg>
-            <div class="timer-text" id="timeDisplay">0:60</div>
+    <div class="timer-page">
+        <div class="timer-page-header">
+            <h2 id="testName"></h2>
+            <div id="timerWysiwyg"></div>
         </div>
-
-        <button id="skipTimerButton" class="skip-btn">Skip Timer</button>
+        <div class="timer-wrapper">
+            <div class="circular-timer">
+                <svg class="progress-ring" id="progressCircle" width="240" height="240">
+                    <circle id="progressRingCircle" stroke="#473E79" stroke-width="12" fill="transparent" r="110"
+                        cx="120" cy="120" />
+                </svg>
+                <div class="timer-text" id="timeDisplay"></div>
+            </div>
+        </div>
+        <div class="timer-action">
+            <button id="skipTimerButton" class="mdc-button mdc-button--outlined timer-skip-btn"><span class="mdc-button__label">Skip Timer</span></button>
+        </div>
     </div>
 </template>
