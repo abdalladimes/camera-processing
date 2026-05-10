@@ -20,7 +20,7 @@ function init() {
                         push({ template: message.options.title, data: message.options.data, notifyControl: false });
                         break;
                     case 'pop':
-                        pop({ notifyControl: false, skipPop: true });
+                        pop({ notifyControl: false });
                         break;
                     case 'home':
                         goHome();

@@ -1,6 +1,3 @@
-#backButton {
-	display: none;
-}
 
 #iconContainer {
 	align-items: center;
@@ -13,7 +10,12 @@
 }
 
 #iconContainer #addIcon {
-	font-size: 24px;
+	display: flex;
+}
+
+#iconContainer #addIcon img {
+	width: 16px;
+	height: 16px;
 }
 
 #iconContainer #parameterImage {
@@ -38,11 +40,11 @@
 
 .editor-title {
 	color: #5f5f5f;
-	font-size: 13px;
+	font-size: 14px;
 	font-style: normal;
 	font-weight: 400;
-	letter-spacing: 0.169px;
-	line-height: 22px; /* 169.231% */
+	letter-spacing: 0.17px;
+	line-height: 22px;
 	margin: 12px 0;
 }
 
@@ -54,4 +56,69 @@
 	align-items: center;
 	border-radius: 4px;
 	margin: 24px 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 19.5px;
+}
+
+.hidden {
+	display: none;
+}
+
+.parameter-actions {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: flex;
+	justify-content: flex-end;
+	gap: 15px;
+	padding: 12px 16px;
+	background: #fff;
+	z-index: 100;
+}
+
+.parameter-actions__btn {
+	padding: 12px 40px;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+	width: 100px;
+	height: 34px;
+	border-radius: 4px;
+	padding: 7px 16px;
+	font-weight: 400;
+	font-size: 13px;
+	line-height: 20px;
+}
+
+.parameter-actions__btn--cancel {
+	background: #fff;
+	color: #5f5f5f;
+	border: 1px solid #ddd;
+}
+
+.parameter-actions__btn--save {
+	background: #101010;
+	color: #fff;
+	border: none;
+}
+
+#rangeClarificationsContainer {
+	margin-top: 12px;
+	margin-bottom: 70px;
+}
+
+.results-clarifications-title {
+	margin-top: 24px;
+	margin-bottom: 24px;
+}
+
+#rangeClarificationsContainer h4 {
+	margin-bottom: 12px;
+	margin-top: 16px;
+}
+
+#rangeClarificationsContainer h4:first-child {
+	margin-top: 0;
 }

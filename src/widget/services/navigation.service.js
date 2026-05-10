@@ -44,7 +44,9 @@ function push(options, callback) {
         return;
     }
     historyStack.push({ template: options.template, view: view, data: options.data });
-    buildfire.history.push(options.template, { showLabelInTitlebar: false });
+    if (historyStack.length > 1) {
+        buildfire.history.push(options.template, { showLabelInTitlebar: false });
+    }
     navigate(options.template, () => {
         if (view && view.init) {
             view.init(options.data || {});
@@ -89,17 +91,34 @@ function pop(options, callback) {
     }
 }
 
+let _isNavigatingHome = false;
+
 function goHome() {
-    historyStack.length = 0;
-    push({ template: 'home', notifyControl: false });
+    if (historyStack.length <= 1 && historyStack[0]?.template === 'home') return;
+    _isNavigatingHome = true;
+    while (historyStack.length > 1) {
+        buildfire.history.pop();
+        historyStack.pop();
+    }
+    _isNavigatingHome = false;
+    if (historyStack.length === 0) {
+        push({ template: 'home', notifyControl: false });
+    } else {
+        navigate(historyStack[0].template, () => {
+            const view = historyStack[0].view;
+            if (view && view.init) {
+                view.init(historyStack[0].data || {});
+            }
+        });
+    }
 }
 
 function onPopHandler() {
+    if (_isNavigatingHome) return;
     const current = historyStack[historyStack.length - 1];
     if (current) {
         if (current.view && current.view.destroy) {
             current.view.destroy();
-
         }
         pop({ skipPop: true }, () => { });
     }

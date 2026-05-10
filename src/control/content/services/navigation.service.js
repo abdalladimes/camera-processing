@@ -2,7 +2,6 @@ import viewsService from './views.service';
 
 const templates = {};
 const historyStack = [];
-let backButtonElement = null;
 
 function getNavigationHistory() {
     return historyStack.slice();
@@ -32,7 +31,6 @@ function push(options, callback) {
     }
     const previous = historyStack[historyStack.length - 1];
     historyStack.push({ template: options.template, view: view, data: options.data });
-    buildfire.history.push(options.template, { showLabelInTitlebar: false });
     navigate(options.template, () => {
         if (previous && previous.view && previous.view.destroy) {
             previous.view.destroy();
@@ -43,7 +41,6 @@ function push(options, callback) {
         if (options.notifyWidget || options.notifyWidget === undefined) {
             navigateWidget({ template: options.template, navigationType: 'push', data: options.data, popToHome: options.popToHome }, () => { });
         }
-        toggleBackButton();
         if (callback) {
             callback();
         }
@@ -62,17 +59,15 @@ function pop(options, callback) {
         current.view.destroy();
     }
     historyStack.pop();
-    if (!options.skipPop) {
-        buildfire.history.pop();
-    }
     const previous = historyStack[historyStack.length - 1];
     if (previous) {
         navigate(previous.template, () => {
             if (previous.view && previous.view.init) {
                 previous.view.init({ ...previous.data });
             }
-
-            toggleBackButton();
+            if (!options || options.notifyWidget || options.notifyWidget === undefined) {
+                buildfire.messaging.sendMessageToWidget({ event: 'navigation', type: 'pop' });
+            }
             if (callback) {
                 callback();
             }
@@ -135,19 +130,6 @@ function navigate(template, callback) {
     /** template management end */
 };
 
-function toggleBackButton() {
-    if (!backButtonElement) {
-        backButtonElement = document.getElementById('backButton');
-        backButtonElement.addEventListener('click', () => {
-            pop({});
-        });
-    }
-    if (getNavigationHistory().length > 1) {
-        backButtonElement.style.display = 'block';
-    } else {
-        backButtonElement.style.display = 'none';
-    }
-};
 
 export default {
     push,

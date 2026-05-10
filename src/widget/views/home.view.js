@@ -1,6 +1,9 @@
 import navigationService from '../services/navigation.service';
 import testsConfigService from '../services/testsConfig.service';
 import historyService from '../services/history.service';
+
+let _listener = null;
+
 const config = {
     datastoreTag: 'config',
     selectors: {
@@ -30,11 +33,11 @@ function init() {
     });
 
 
-    buildfire.datastore.onUpdate((event) => {
+    _listener = buildfire.datastore.onUpdate((event) => {
         console.log('Data has been updated ', event);
         if (event && event.tag === config.datastoreTag) {
             const newContent = event.data?.introduction || '';
-            elements.introductionWysiwyg.innerHTML = newContent;
+            if (elements.introductionWysiwyg) elements.introductionWysiwyg.innerHTML = newContent;
         }
     }, false);
 
@@ -56,4 +59,11 @@ function init() {
 }
 
 
-export default { init }
+function destroy() {
+    if (_listener) {
+        _listener.clear();
+        _listener = null;
+    }
+}
+
+export default { init, destroy }

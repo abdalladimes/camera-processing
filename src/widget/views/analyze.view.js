@@ -1,4 +1,14 @@
 import testsConfigService from '../services/testsConfig.service';
+import navigationService from '../services/navigation.service';
+
+// ═══════════════════════════════════════════════════════════════
+// Toggle this to enable auto-capture with frame validation
+const USE_AUTO_CAPTURE = false;
+// ═══════════════════════════════════════════════════════════════
+
+const MIN_BRIGHTNESS = 120;
+const MAX_BRIGHTNESS = 220;
+const MAX_SATURATION = 40;
 
 let state = {
     test: null,
@@ -8,6 +18,7 @@ let state = {
     selectors: {
         detectionFailedContainer: '#detectionFailedContainer',
         analyzingContainer: '#analyzingContainer',
+        resultsContainer: '#resultsContainer',
     }
 }
 let elements = {};
@@ -36,15 +47,46 @@ function init(options) {
     startCameraCapture();
 
     document.getElementById('retryButton').addEventListener('click', () => {
-        if (_captureTimeout) { clearTimeout(_captureTimeout); _captureTimeout = null; }
-        _frameAccepted = false;
-        _lastValidation = null;
-        _isProcessing = false;
+        if (USE_AUTO_CAPTURE) {
+            if (_captureTimeout) { clearTimeout(_captureTimeout); _captureTimeout = null; }
+            _frameAccepted = false;
+            _lastValidation = null;
+            _isProcessing = false;
+        }
+        hideAllContainers();
         startCameraCapture();
+    });
+
+    document.getElementById('goHomeBtn').addEventListener('click', () => {
+        navigationService.goHome();
+    });
+
+    document.getElementById('debugToggle').addEventListener('change', (e) => {
+        document.getElementById('debugContainer').classList.toggle('active', e.target.checked);
     });
 }
 
 function startCameraCapture() {
+    if (USE_AUTO_CAPTURE) {
+        startAutoCameraCapture();
+    } else {
+        startManualCameraCapture();
+    }
+}
+
+function startManualCameraCapture() {
+    getImageFromCamera({
+        overlayImageUrl: state.overlayImage.url
+    }, (error, imageData) => {
+        if (error) {
+            console.error('Camera closed/cancelled:', error);
+            return;
+        }
+        processCameraImage(imageData, true);
+    });
+}
+
+function startAutoCameraCapture() {
     _frameAccepted = false;
     _lastValidation = null;
     _isProcessing = false;
@@ -118,25 +160,53 @@ function getImageFromCamera(options, callback) {
     buildfire.services.camera.getPicture({ overlayImageUrl: new URL(options.overlayImageUrl, window.location.href).href, destinationType: 0, quality: 100 }, callback);
 }
 
+function hideAllContainers() {
+    elements.detectionFailedContainer.classList.remove('active');
+    elements.resultsContainer.classList.remove('active');
+}
+
+function showDetectionFailed() {
+    hideAllContainers();
+    elements.detectionFailedContainer.classList.add('active');
+}
+
+function showResults() {
+    hideAllContainers();
+    elements.resultsContainer.classList.add('active');
+}
+
 function processCameraImage(imageSrc, imageAsData) {
     const testResultsDiv = document.getElementById('testResults');
     // 1. Create a new image element in memory
     const imgElement = new Image();
     imgElement.onload = function () {
         const lightingResults = analyzeLighting(imgElement);
-        // TODO: reject on poor lighting conditions (e.g. if brightness is too low or saturation is too high)
+        const isBlurry = isImageBlurrySobel(imgElement);
+
+        if (lightingResults.brightness < MIN_BRIGHTNESS
+            || lightingResults.brightness > MAX_BRIGHTNESS
+            || lightingResults.saturation > MAX_SATURATION
+            || isBlurry) {
+            let reasons = [];
+            if (lightingResults.brightness < MIN_BRIGHTNESS) reasons.push('Too dark (brightness: ' + lightingResults.brightness + ')');
+            if (lightingResults.brightness > MAX_BRIGHTNESS) reasons.push('Too bright (brightness: ' + lightingResults.brightness + ')');
+            if (lightingResults.saturation > MAX_SATURATION) reasons.push('High saturation (' + lightingResults.saturation + ')');
+            if (isBlurry) reasons.push('Image is blurry');
+            document.querySelector('.detection-failed__reason').textContent = reasons.join(', ');
+            showDetectionFailed();
+            return;
+        }
+
+        showResults();
         testResultsDiv.innerHTML = JSON.stringify(lightingResults, null, 2);
 
-        const isBlurry = isImageBlurrySobel(imgElement);
-        // TODO: reject on blurry image
-        document.getElementById('isBlurry').innerHTML = (isBlurry ? `(Blurry)` : `(Sharp)`);
+        document.getElementById('isBlurry').innerHTML = '(Sharp)';
         const extractedColors = getParameterColorsFromImage(imgElement);
         drawSamplingPoints(imgElement);
         const results = getResultsFromExtractedColors(extractedColors, state.parameters);
         document.getElementById('extractedColors').innerHTML = JSON.stringify(extractedColors, null, 2);
         document.getElementById('results').innerHTML = JSON.stringify(results, null, 2);
         renderReadableResults(results, state.parameters);
-
     };
     if (imageAsData) {
         imgElement.src = `data:image/png;base64,${imageSrc}`;
@@ -540,130 +610,76 @@ function calculateDeltaE(lab1, lab2) {
 
 function renderReadableResults(results, parameters) {
     var container = document.getElementById('readableResults');
-    container.innerHTML = '<h3 style="margin-bottom:8px;">Urine Data</h3>';
+    container.innerHTML = '<h2 class="results-list__title">Urine Data</h2>';
     for (var name in results) {
         var r = results[name];
         var range = r.range || 'Unknown';
-        var color = '#f5a623';
-        if (range === 'Within Range') color = '#4caf50';
-        else if (range === 'Outside of Range') color = '#e53935';
-        else if (range === 'Below Range') color = '#f5a623';
-        var row = document.createElement('div');
-        row.style.cssText = 'padding:10px 0; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;';
-        row.innerHTML = '<div><strong>' + name + '</strong>' +
-            '<br><span style="color:' + color + '; font-size:14px;">' + range + '</span>' +
-            ' <span style="color:#666; font-size:12px;">(' + r.interpretation + ' - ' + r.value + ')</span></div>' +
-            '<div style="display:flex; flex-direction:column; align-items:center; gap:2px;">' +
-            '<div style="width:20px; height:20px; border-radius:50%; background:' + r.referenceColor + '; border:1px solid #ddd;"></div>' +
-            '<div style="width:20px; height:20px; border-radius:50%; background:rgb(' + r.extractedColor.r + ',' + r.extractedColor.g + ',' + r.extractedColor.b + '); border:1px solid #ddd;"></div>' +
+        var rangeColor = '#f5a623';
+        if (range === 'Within Range') rangeColor = '#4caf50';
+        else if (range === 'Outside of Range') rangeColor = '#e53935';
+        else if (range === 'Below Range') rangeColor = '#f5a623';
+
+        var card = document.createElement('div');
+        card.className = 'result-card';
+        card.innerHTML =
+            '<div class="result-card__row">' +
+                '<div class="result-card__name-row">' +
+                    '<img class="result-card__icon" src="resources/drop.png" alt="">' +
+                    '<span class="result-card__name">' + name + '</span>' +
+                '</div>' +
+                '<span class="result-card__link">View History</span>' +
+            '</div>' +
+            '<div class="result-card__range" style="color:' + rangeColor + '">' + range + '</div>' +
+            '<div class="result-card__clarification"></div>' +
+            '<div class="result-card__see-more">' +
+                '<span class="result-card__link result-card__toggle" data-param="' + name + '" data-value="' + r.value + '">See More</span>' +
             '</div>';
-        container.appendChild(row);
+        container.appendChild(card);
     }
-}
 
-export default { init, validateFrame }
+    var addNotesBtn = document.createElement('div');
+    addNotesBtn.className = 'results-list__add-notes';
+    addNotesBtn.innerHTML = '<button class="mdc-button mdc-button--raised results-list__add-notes-btn">Add Notes</button>';
+    container.appendChild(addNotesBtn);
 
-let extractedColors = {
-    Ascorbate: {
-        "r": 4,
-        "g": 1,
-        "b": 10,
-        "a": 255
-    }
-}
+    container.addEventListener('click', function(e) {
+        var toggle = e.target.closest('.result-card__toggle');
+        if (!toggle) return;
 
-let parameters =
-{
-    "Ascorbate": {
-        "id": 1,
-        "name": "Ascorbate",
-        "imageUrl": "",
-        "info": "",
-        "valueRanges": [
-            {
-                "correspondingValue": "0",
-                "referenceColor": {
-                    "hex": "#368295"
-                },
-                "interpretation": "Normal Range",
-                "clarification": {
-                    "healthy": {
-                        "color": "green"
-                    },
-                    "unhealthy": {
-                        "color": "red"
-                    }
-                }
-            },
-            {
-                "correspondingValue": "0.6",
-                "referenceColor": {
-                    "hex": "#18a185"
-                },
-                "interpretation": "Normal Range",
-                "clarification": {}
-            },
-            {
-                "correspondingValue": "1.4",
-                "referenceColor": {
-                    "hex": "#89c765",
-                    "rgb": {
-                        "r": 255,
-                        "g": 255,
-                        "b": 255
-                    },
-                    "hsv": {
-                        "h": 60,
-                        "s": 100,
-                        "v": 100
-                    }
-                },
-                "interpretation": "Excessive Range",
-                "clarification": {}
-            },
-            {
-                "correspondingValue": "2.8",
-                "referenceColor": {
-                    "hex": "#d0d139",
-                    "rgb": {
-                        "r": 255,
-                        "g": 255,
-                        "b": 255
-                    },
-                    "hsv": {
-                        "h": 60,
-                        "s": 100,
-                        "v": 100
-                    }
-                },
-                "interpretation": "Excessive Range",
-                "clarification": {}
-            },
-            {
-                "correspondingValue": "5",
-                "referenceColor": {
-                    "hex": "#faf39b",
-                    "rgb": {
-                        "r": 255,
-                        "g": 255,
-                        "b": 255
-                    },
-                    "hsv": {
-                        "h": 60,
-                        "s": 100,
-                        "v": 100
-                    }
-                },
-                "interpretation": "Extreme Range",
-                "clarification": {}
-            }
-        ],
-        "locationOnOverlay": {
-            "center": {
-                "y": 29,
-                "x": 25
-            },
-            "samplingOffsetRadius": 15
+        var card = toggle.closest('.result-card');
+        var clarificationEl = card.querySelector('.result-card__clarification');
+        var isOpen = toggle.textContent === 'See Less';
+
+        if (isOpen) {
+            clarificationEl.innerHTML = '';
+            clarificationEl.classList.remove('active');
+            toggle.textContent = 'See More';
+            return;
         }
+
+        var paramName = toggle.dataset.param;
+        var paramValue = toggle.dataset.value;
+
+        testsConfigService.getDatastoreParameter({ parameter: { name: paramName } }, function(err, result) {
+            var text = '';
+            if (result && result.data) {
+                var matchedRange = (result.data.valueRanges || []).find(function(vr) {
+                    return vr.correspondingValue === paramValue;
+                });
+                text = (matchedRange && matchedRange.info) || result.data.info || '';
+            }
+            clarificationEl.innerHTML = text || '<p>No additional information available.</p>';
+            clarificationEl.classList.add('active');
+            toggle.textContent = 'See Less';
+        });
+    });
+}
+
+function destroy() {
+    if (_captureTimeout) {
+        clearTimeout(_captureTimeout);
+        _captureTimeout = null;
     }
 }
+
+export default { init, destroy, validateFrame }

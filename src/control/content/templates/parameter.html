@@ -1,18 +1,25 @@
 <template>
-    <h2>Test Information</h2>
+    <div class="section-title">Test Information</div>
     <div class="image-row">
         Icon
         <div id="iconContainer">
             <span id="addIcon">
-                +
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 1V15M1 8H15" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+                </svg>
             </span>
             <img id="parameterImage" src="" alt="">
         </div>
     </div>
 
-    <h4>Description</h4>
+    <div class="editor-title">Description</div>
     <textarea id="wysiwygContent" name="content"></textarea>
 
-    <h2>Results Clarifications</h2>
+    <div class="section-title results-clarifications-title">Results Clarifications</div>
     <div id="rangeClarificationsContainer"></div>
+
+    <div class="parameter-actions">
+        <button id="cancelBtn" class="parameter-actions__btn parameter-actions__btn--cancel">Cancel</button>
+        <button id="saveBtn" class="parameter-actions__btn parameter-actions__btn--save">Save</button>
+    </div>
 </template>

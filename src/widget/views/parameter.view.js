@@ -1,29 +1,33 @@
-import buildfire from 'buildfire';
 import testsConfigService from '../services/testsConfig.service';
+
+let _listener = null;
 
 function init(options) {
     if (options && options.parameter) {
         document.getElementById('testName').innerText = options.parameter.name;
     }
-    buildfire.datastore.onUpdate((event) => {
+
+    _listener = buildfire.datastore.onUpdate((event) => {
+        const el = document.getElementById('wysiwygContent');
+        if (!el) return;
         testsConfigService.getDatastoreParameter({ parameter: options.parameter }, (err, result) => {
-            if (err) {
-                console.error('Error fetching data', err);
-                return;
-            }
-            document.getElementById('wysiwygContent').innerHTML = result?.data?.info || '';
+            if (err) return;
+            el.innerHTML = result?.data?.info || '';
         });
     });
 
-
     testsConfigService.getDatastoreParameter({ parameter: options.parameter }, (err, result) => {
-        if (err) {
-            console.error('Error fetching data', err);
-            return;
-        }
-        document.getElementById('wysiwygContent').innerHTML = result?.data?.info || '';
+        if (err) return;
+        const el = document.getElementById('wysiwygContent');
+        if (el) el.innerHTML = result?.data?.info || '';
     });
 }
 
+function destroy() {
+    if (_listener) {
+        _listener.clear();
+        _listener = null;
+    }
+}
 
-export default { init }
+export default { init, destroy }

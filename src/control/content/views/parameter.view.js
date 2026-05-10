@@ -1,11 +1,16 @@
 import testsConfigService from '../services/testsConfig.service';
+import navigationService from '../services/navigation.service';
 
 let parameterData = null;
 let rangeEditors = [];
 let loaded = false;
-let timerDelay = null;
 
 function init(options) {
+    // Clean up any leftover tinymce instances
+    tinymce.remove('#wysiwygContent');
+    rangeEditors.forEach(({ id }) => tinymce.remove(`#${id}`));
+    rangeEditors = [];
+
     parameterData = options.parameter;
     loaded = false;
     buildfire.spinner.show();
@@ -19,7 +24,6 @@ function init(options) {
                 img.src = parameterData.imageUrl;
                 img.style.display = 'block';
                 document.getElementById('addIcon').style.display = 'none';
-                _collectAndSave();
             }
         });
     });
@@ -49,11 +53,6 @@ function init(options) {
     tinymce.init({
         selector: allSelectors,
         setup: (editor) => {
-            editor.on('change keyUp', () => {
-                if (!loaded) return;
-                if (timerDelay) clearTimeout(timerDelay);
-                timerDelay = setTimeout(() => _collectAndSave(), 500);
-            });
             editor.on('init', () => {
                 readyCount++;
                 if (readyCount < totalEditors) return;
@@ -65,7 +64,7 @@ function init(options) {
                         loaded = true;
                         return;
                     }
-                    if (result?.data) {
+                    if (result && result.data) {
                         const saved = result.data;
                         if (saved.imageUrl) {
                             parameterData.imageUrl = saved.imageUrl;
@@ -90,9 +89,17 @@ function init(options) {
             });
         }
     });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+        _save();
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+        navigationService.pop({});
+    });
 }
 
-function _collectAndSave() {
+function _save() {
     if (!loaded) return;
     const mainEditor = tinymce.get('wysiwygContent');
     const info = mainEditor ? mainEditor.getContent() : '';
@@ -110,16 +117,17 @@ function _collectAndSave() {
             valueRanges,
         }
     }, (err) => {
-        if (err) console.error('Error saving data', err);
+        if (err) {
+            console.error('Error saving data', err);
+            return;
+        }
+        navigationService.pop({});
     });
 }
 
 function destroy() {
-    if (timerDelay) {
-        clearTimeout(timerDelay);
-        timerDelay = null;
-    }
     loaded = false;
+    parameterData = null;
     tinymce.remove('#wysiwygContent');
     rangeEditors.forEach(({ id }) => tinymce.remove(`#${id}`));
     rangeEditors = [];

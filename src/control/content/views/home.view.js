@@ -8,11 +8,17 @@ const state = {
     data: null,
     homeEditor: null,
     timerEditor: null,
-    homeEditorInitialized: false,
-    timerEditorInitialized: false,
+    loaded: false,
     allParameters: testsConfigService.testParameters,
 }
 function init() {
+    // Clean up any leftover tinymce instances
+    tinymce.remove('#introductionWysiwyg');
+    tinymce.remove('#timerWysiwyg');
+    state.homeEditor = null;
+    state.timerEditor = null;
+    state.loaded = false;
+
     buildfire.spinner.show();
     buildfire.datastore.get(DATASTORE_TAG, (err, result) => {
         if (err) {
@@ -33,7 +39,9 @@ function init() {
         }));
 
         Promise.all(promises).finally(() => {
+            state.loaded = true;
             buildfire.spinner.hide();
+            document.getElementById('homeContent').classList.remove('hidden');
         });
     });
 
@@ -101,6 +109,10 @@ function init() {
 function destroy() {
     tinymce.remove('#introductionWysiwyg');
     tinymce.remove('#timerWysiwyg');
+    state.homeEditor = null;
+    state.timerEditor = null;
+    state.loaded = false;
+    state.data = null;
 }
 
 function saveData(options, callback) {
@@ -108,8 +120,14 @@ function saveData(options, callback) {
         introduction: state.homeEditor ? state.homeEditor.getContent() : '',
         timer: state.timerEditor ? state.timerEditor.getContent() : '',
     };
+    if (dataToSave.introduction === (state.data?.introduction || '')
+        && dataToSave.timer === (state.data?.timer || '')) {
+        return;
+    }
+    state.data = dataToSave;
     buildfire.datastore.save(dataToSave, DATASTORE_TAG, (err, result) => {
-        if (callback) callback(err, result);
+        if (err) return;
+        if (callback) callback(null, result);
     });
 }
 
@@ -119,18 +137,19 @@ function initHomeWysiwyg(callback) {
         selector: '#introductionWysiwyg',
         setup: (homeEditor) => {
             state.homeEditor = homeEditor;
-            homeEditor.on('change keyUp', (e) => { // use change and keyUp to cover all cases
-                if (e && e.target && e.target.getAttribute && e.target.getAttribute('data-id') === 'introductionWysiwyg') {
-                    if (timerDelay) clearTimeout(timerDelay);
-                    timerDelay = setTimeout(() => { // use timer delay to avoid handling too many WYSIWYG updates
-                        saveData();
-                        navigateWidget({ template: 'home', navigationType: 'push' }, (err) => {
+            homeEditor.on('change keyup', () => {
+                if (!state.loaded) return;
+                if (!homeEditor.hasFocus()) return;
+                if (timerDelay) clearTimeout(timerDelay);
+                timerDelay = setTimeout(() => {
+                    saveData(null, () => {
+                        navigateWidget({ template: 'home', navigationType: 'push', popToHome: true }, (err) => {
                             if (err) {
                                 console.error('Error pushing to history:', err);
                             }
                         });
-                    }, 500);
-                }
+                    });
+                }, 500);
             });
             homeEditor.on('init', () => {
                 homeEditor.setContent(state.data?.introduction || '');
@@ -146,18 +165,19 @@ function initTimerWysiwyg(callback) {
         selector: '#timerWysiwyg',
         setup: (timerEditor) => {
             state.timerEditor = timerEditor;
-            timerEditor.on('change keyUp', (e) => { // use change and keyUp to cover all cases
-                if (e && e.target && e.target.getAttribute && e.target.getAttribute('data-id') === 'timerWysiwyg') {
-                    if (timerDelay) clearTimeout(timerDelay);
-                    timerDelay = setTimeout(() => { // use timer delay to avoid handling too many WYSIWYG updates
-                        saveData();
-                        navigateWidget({ template: 'timer', navigationType: 'push' }, (err) => {
+            timerEditor.on('change keyup', () => {
+                if (!state.loaded) return;
+                if (!timerEditor.hasFocus()) return;
+                if (timerDelay) clearTimeout(timerDelay);
+                timerDelay = setTimeout(() => {
+                    saveData(null, () => {
+                        navigateWidget({ template: 'timer', navigationType: 'push', popToHome: false }, (err) => {
                             if (err) {
                                 console.error('Error pushing to history:', err);
                             }
                         });
-                    }, 500);
-                }
+                    });
+                }, 500);
             });
             timerEditor.on('init', () => {
                 timerEditor.setContent(state.data?.timer || '');

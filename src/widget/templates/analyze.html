@@ -1,49 +1,33 @@
 <template>
-    hi there
-
-
-    <div id="detectionFailedContainer">
-
+    <div id="detectionFailedContainer" class="detection-failed">
+        <div class="detection-failed__content">
+            <h2 class="detection-failed__title">Can't detect the strip</h2>
+            <p class="detection-failed__message">Place the strip against a light-colored background, ensuring there is sufficient ambient lighting and avoiding shadow.</p>
+            <p class="detection-failed__reason"></p>
+        </div>
+        <div class="detection-failed__actions">
+            <button id="goHomeBtn" class="mdc-button mdc-button--outlined detection-failed__btn">Go Home</button>
+            <button id="retryButton" class="mdc-button mdc-button--raised detection-failed__btn detection-failed__btn--primary">Retry</button>
+        </div>
     </div>
 
     <div id="analyzingContainer"></div>
 
-    <div id="resultsContainer"></div>
+    <div id="resultsContainer">
+        <div id="readableResults" class="results-list"></div>
 
-    <div id="readableResults" style="padding: 8px 16px;"></div>
-
-    <div id="readableResults" style="padding: 8px 16px;"></div>
-
-
-
-
-
-    <div>
-        <h2>openCV Test </h2>
-        <div>
-            <h5>Tips:</h5>
-            <div>
-                <p>Saturation Target: 0 to 20</p>
-            </div>
-            <div>
-                <p>Brightness Target: 150 to 230</p>
-            </div>
-            <div>
-                <p>RGB Color Balance (Target: R, G, and B within 20 points of each other)</p>
-            </div>
-
+        <div class="debug-toggle">
+            <label class="debug-toggle__label">
+                <input type="checkbox" id="debugToggle"> Show debug info
+            </label>
+        </div>
+        <div id="debugContainer" class="debug-container">
             <h3>Test Results</h3>
             <div id="testResults"></div>
-            <div id="colorResults" style="min-width: 100px;height: 50px;"></div>
+            <canvas id="canvasOutput" class="debug-canvas"></canvas>
+            <div id="isBlurry"></div>
+            <div id="extractedColors" class="debug-text"></div>
+            <div id="results" class="debug-text"></div>
         </div>
     </div>
-
-    <div id="originalImage"></div>
-    <canvas style='width:100%' id='canvasOutput'></canvas>
-    <div id="isBlurry"></div>
-    <div id="extractedColors"></div>
-    <div id="results"></div>
-
-    <button id="retryButton">retry</button>
-
 </template>

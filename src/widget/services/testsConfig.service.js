@@ -11,7 +11,7 @@ const testParameters = [
             {
                 correspondingValue: '0',
                 referenceColor: {
-                    hex: '#556e7e',
+                    hex: '#558ba7',
                     originalHex: '#368295',
                 },
                 interpretation: 'Normal Range',
@@ -24,7 +24,7 @@ const testParameters = [
             {
                 correspondingValue: '0.6',
                 referenceColor: {
-                hex: '#397d67',
+                hex: '#4c978a',
                     originalHex: '#18a185',
                     // rgb: { r: 255, g: 255, b: 255 },
                     // hsv: { h: 60, s: 100, v: 100 }
@@ -39,7 +39,7 @@ const testParameters = [
             {
                 correspondingValue: '1.4',
                 referenceColor: {
-                    hex: '#000000',
+                    hex: '#70a446',
                     rgb: { r: 255, g: 255, b: 255 },
                     hsv: { h: 60, s: 100, v: 100 }
                 },
@@ -53,7 +53,7 @@ const testParameters = [
             {
                 correspondingValue: '2.8',
                 referenceColor: {
-                    hex: '#b3a01f',
+                    hex: '#c0af26',
                     originalHex: '#d0d139',
                 },
                 interpretation: 'Excessive Range',
@@ -63,7 +63,7 @@ const testParameters = [
             {
                 correspondingValue: '5',
                 referenceColor: {
-                    hex: '#000000',
+                    hex: '#f3df87',
                     rgb: { r: 255, g: 255, b: 255 },
                     hsv: { h: 60, s: 100, v: 100 }
                 },
@@ -85,7 +85,7 @@ const testParameters = [
             {
                 correspondingValue: 'Neg.',
                 referenceColor: {
-                    hex: '#beada2',
+                    hex: '#dfcac1',
                     originalHex: '#fee0c8'
                 },
                 interpretation: 'No BHB',
@@ -95,7 +95,7 @@ const testParameters = [
             {
                 correspondingValue: '4(0.4)',
                 referenceColor: {
-                hex: '#bc9993',
+                hex: '#d8b7b4',
                     originalHex: '#fbc9bc'
                 },
                 interpretation: 'Trace BHB',
@@ -105,7 +105,7 @@ const testParameters = [
             {
                 correspondingValue: '12(1.2)',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#c98c9b'
                 },
                 interpretation: 'Small BHB',
                 range: 'Outside of Range',
@@ -114,7 +114,7 @@ const testParameters = [
             {
                 correspondingValue: '32(3.2)',
                 referenceColor: {
-                    hex: '#ae4e69',
+                    hex: '#b9597b',
                     originalHex: '#d16984'
                 },
                 interpretation: 'Moderate BHB',
@@ -124,7 +124,7 @@ const testParameters = [
             {
                 correspondingValue: '64(6.4)',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#b85b86'
                 },
                 interpretation: 'Large BHB',
                 range: 'Outside of Range',
@@ -133,7 +133,7 @@ const testParameters = [
             {
                 correspondingValue: '128(12.8)',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#974d75'
                 },
                 interpretation: 'High BHB',
                 range: 'Outside of Range',
@@ -150,7 +150,7 @@ const testParameters = [
             {
                 correspondingValue: 'Neg',
                 referenceColor: {
-                    hex: '#c3bfb0',
+                    hex: '#e3ded0',
                     originalHex: '#fffde7'
                 },
                 interpretation: 'Normal Range',
@@ -160,7 +160,7 @@ const testParameters = [
             {
                 correspondingValue: 'Small 17',
                 referenceColor: {
-                hex: '#c1a07c',
+                hex: '#dabba1',
                     originalHex: '#ffdaab'
                 },
                 interpretation: 'Small Range',
@@ -171,7 +171,7 @@ const testParameters = [
 
                 correspondingValue: 'Moderate 50',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#cca588'
                 },
                 interpretation: 'Moderate Range',
                 range: 'Outside of Range',
@@ -181,7 +181,7 @@ const testParameters = [
 
                 correspondingValue: 'Large 100',
                 referenceColor: {
-                hex: '#b77e67',
+                hex: '#c18c7a',
                     originalHex: '#eaa790'
                 },
                 interpretation: 'Extreme Range',
@@ -200,7 +200,7 @@ const testParameters = [
 
                 correspondingValue: 'Neg',
                 referenceColor: {
-                    hex: '#bd9241',
+                    hex: '#db9f2b',
                     originalHex: '#ffcc31'
                 },
                 interpretation: 'Negative (Normal) Range',
@@ -211,7 +211,7 @@ const testParameters = [
 
                 correspondingValue: 'Non hemolyzed 10 Trace',
                 referenceColor: {
-                hex: '#be841a',
+                hex: '#db9e1f',
                     originalHex: '#ffcc31'
                 },
                 interpretation: 'Trace Range',
@@ -222,7 +222,7 @@ const testParameters = [
 
                 correspondingValue: 'Hemolyzed 10 Trace',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#c79821'
                 },
                 interpretation: 'Very Small Range',
                 range: 'Outside of Range',
@@ -232,7 +232,7 @@ const testParameters = [
 
                 correspondingValue: '25 Small ',
                 referenceColor: {
-                hex: '#96771e',
+                hex: '#a4861e',
                     originalHex: '#bcb144'
                 },
                 interpretation: 'Above-normal Range',
@@ -243,7 +243,7 @@ const testParameters = [
 
                 correspondingValue: '80 Moderate',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#758925'
                 },
                 interpretation: 'Moderate Range',
                 range: 'Outside of Range',
@@ -253,7 +253,7 @@ const testParameters = [
 
                 correspondingValue: '200 Large',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#4f7429'
                 },
                 interpretation: 'Significant Range',
                 range: 'Outside of Range',
@@ -271,7 +271,7 @@ const testParameters = [
 
                 correspondingValue: '<1',
                 referenceColor: {
-                    hex: '#bdb3a2',
+                    hex: '#d7cbba',
                     originalHex: '#fff2d4'
                 },
                 interpretation: 'Normal Range',
@@ -282,7 +282,7 @@ const testParameters = [
 
                 correspondingValue: '2.5',
                 referenceColor: {
-                hex: '#b7afaf',
+                hex: '#d2c8c6',
                     originalHex: '#f3e8e9'
                 },
                 interpretation: 'Mildly Normal Range',
@@ -293,7 +293,7 @@ const testParameters = [
 
                 correspondingValue: '5',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#c7b4b8'
                 },
                 interpretation: 'High Normal Range',
                 range: 'Within Range',
@@ -303,7 +303,7 @@ const testParameters = [
 
                 correspondingValue: '7.5',
                 referenceColor: {
-                hex: '#b191a0',
+                hex: '#b999aa',
                     originalHex: '#e0c6d7'
                 },
                 interpretation: 'Borderline High Range',
@@ -314,7 +314,7 @@ const testParameters = [
 
                 correspondingValue: '>10',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#9896b7'
                 },
                 interpretation: 'Excessively High Range',
                 range: 'Outside of Range',
@@ -332,7 +332,7 @@ const testParameters = [
 
                 correspondingValue: '0.9',
                 referenceColor: {
-                    hex: '#bbb1a0',
+                    hex: '#d4c9b7',
                     originalHex: '#fff1d2'
                 },
                 interpretation: 'Low-normal Range',
@@ -343,7 +343,7 @@ const testParameters = [
 
                 correspondingValue: '4.4',
                 referenceColor: {
-                hex: '#bba68d',
+                hex: '#d0beaa',
                     originalHex: '#f2ddbd'
                 },
                 interpretation: 'Low Range',
@@ -354,7 +354,7 @@ const testParameters = [
 
                 correspondingValue: '8.8',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#c2b0a1'
                 },
                 interpretation: 'Moderate Range',
                 range: 'Outside of Range',
@@ -364,7 +364,7 @@ const testParameters = [
 
                 correspondingValue: '17.7',
                 referenceColor: {
-                hex: '#bca9a3',
+                hex: '#c6b3ae',
                     originalHex: '#d8c8b7'
                 },
                 interpretation: 'Reasonable Range',
@@ -375,7 +375,7 @@ const testParameters = [
 
                 correspondingValue: '26.5',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#9e879d'
                 },
                 interpretation: 'Elevated Range',
                 range: 'Outside of Range',
@@ -393,7 +393,7 @@ const testParameters = [
 
                 correspondingValue: '0',
                 referenceColor: {
-                    hex: '#bab5a8',
+                    hex: '#d2cbbe',
                     originalHex: '#fff7e5'
                 },
                 interpretation: 'Normal Range',
@@ -404,7 +404,7 @@ const testParameters = [
 
                 correspondingValue: '0.002',
                 referenceColor: {
-                hex: '#b9b0a5',
+                hex: '#cec7ba',
                     originalHex: '#fff1e2'
                 },
                 interpretation: 'Low-normal Range',
@@ -415,7 +415,7 @@ const testParameters = [
 
                 correspondingValue: '0.004',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#c7bab3'
                 },
                 interpretation: 'Semi-low Range',
                 range: 'Outside of Range',
@@ -425,7 +425,7 @@ const testParameters = [
 
                 correspondingValue: '0.008',
                 referenceColor: {
-                hex: '#b9a49f',
+                hex: '#c2afab',
                     originalHex: '#fdddd7'
                 },
                 interpretation: 'Low Range',
@@ -436,7 +436,7 @@ const testParameters = [
 
                 correspondingValue: '0.02',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#d0b7b4'
                 },
                 interpretation: 'Low Range',
                 range: 'Outside of Range',
@@ -446,7 +446,7 @@ const testParameters = [
 
                 correspondingValue: '0.1',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#c9a7aa'
                 },
                 interpretation: 'Very Low Range',
                 range: 'Outside of Range',
@@ -464,7 +464,7 @@ const testParameters = [
 
                 correspondingValue: 'Neg. (0-0.8)',
                 referenceColor: {
-                    hex: '#76979a',
+                    hex: '#78a6b2',
                     originalHex: '#a2dadb'
                 },
                 interpretation: 'Normal Range',
@@ -475,7 +475,7 @@ const testParameters = [
 
                 correspondingValue: '5 Trace ',
                 referenceColor: {
-                hex: '#7b9562',
+                hex: '#7ea483',
                     originalHex: '#b6dcae'
                 },
                 interpretation: 'Small-to-Normal Range',
@@ -486,7 +486,7 @@ const testParameters = [
 
                 correspondingValue: '15',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#8b9633'
                 },
                 interpretation: 'Trace Range',
                 range: 'Outside of Range',
@@ -496,7 +496,7 @@ const testParameters = [
 
                 correspondingValue: '30',
                 referenceColor: {
-                hex: '#946c10',
+                hex: '#a37512',
                     originalHex: '#c5af25'
                 },
                 interpretation: 'Above-normal Range',
@@ -507,7 +507,7 @@ const testParameters = [
 
                 correspondingValue: '60',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#9b5715'
                 },
                 interpretation: 'Excessive Range',
                 range: 'Outside of Range',
@@ -517,7 +517,7 @@ const testParameters = [
 
                 correspondingValue: '110',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#813a18'
                 },
                 interpretation: 'Extreme Range',
                 range: 'Outside of Range',
@@ -535,7 +535,7 @@ const testParameters = [
 
                 correspondingValue: 'Neg',
                 referenceColor: {
-                    hex: '#b09d90',
+                    hex: '#c6b4aa',
                     originalHex: '#fee0c8'
                 },
                 interpretation: 'No Ketones',
@@ -546,7 +546,7 @@ const testParameters = [
 
                 correspondingValue: 'Trace 0.5',
                 referenceColor: {
-                hex: '#ae8c83',
+                hex: '#be9b99',
                     originalHex: '#fbc9bc'
                 },
                 interpretation: 'Trace Ketones',
@@ -557,7 +557,7 @@ const testParameters = [
 
                 correspondingValue: 'Small 1.5',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#b8687f'
                 },
                 interpretation: 'Small Ketones',
                 range: 'Outside of Range',
@@ -567,7 +567,7 @@ const testParameters = [
 
                 correspondingValue: 'Moderate 4.0',
                 referenceColor: {
-                    hex: '#9c374f',
+                    hex: '#aa365d',
                     originalHex: '#d16984'
                 },
                 interpretation: 'Moderate Ketones',
@@ -578,7 +578,7 @@ const testParameters = [
 
                 correspondingValue: 'Large 8',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#a32e63'
                 },
                 interpretation: 'Large Ketones',
                 range: 'Outside of Range',
@@ -588,7 +588,7 @@ const testParameters = [
 
                 correspondingValue: 'Large 16',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#7d1d54'
                 },
                 interpretation: 'Very Large Ketones',
                 range: 'Outside of Range',
@@ -605,7 +605,7 @@ const testParameters = [
             {
                 correspondingValue: 'Neg',
                 referenceColor: {
-                    hex: '#b6ae9a',
+                    hex: '#cdc4b2',
                     originalHex: '#fdfad7',
                 },
                 interpretation: 'Normal Range',
@@ -618,7 +618,7 @@ const testParameters = [
             {
                 correspondingValue: 'Trace 15',
                 referenceColor: {
-                hex: '#b8a792',
+                hex: '#c7b7a7',
                     originalHex: '#f8e9cf',
                     // rgb: { r: 255, g: 255, b: 255 },
                     // hsv: { h: 60, s: 100, v: 100 }
@@ -633,7 +633,7 @@ const testParameters = [
             {
                 correspondingValue: 'Small 70',
                 referenceColor: {
-                    hex: '#000000',
+                    hex: '#bdaca2',
                     // rgb: { r: 255, g: 255, b: 255 },
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
@@ -647,7 +647,7 @@ const testParameters = [
             {
                 correspondingValue: 'Moderate 125',
                 referenceColor: {
-                hex: '#8b667c',
+                hex: '#996f8e',
                     originalHex: '#c6abba',
                     // rgb: { r: 255, g: 255, b: 255 },
                     // hsv: { h: 60, s: 100, v: 100 }
@@ -662,7 +662,7 @@ const testParameters = [
             {
                 correspondingValue: 'Large 500',
                 referenceColor: {
-                    hex: '#000000',
+                    hex: '#7d578d',
                     // rgb: { r: 255, g: 255, b: 255 },
                     // hsv: { h: 60, s: 100, v: 100 }
                 },
@@ -685,7 +685,7 @@ const testParameters = [
 
                 correspondingValue: '10',
                 referenceColor: {
-                    hex: '#c2b3a3',
+                    hex: '#e8d8c6',
                     originalHex: '#f3e3c4'
                 },
                 interpretation: 'Normal (Negative) Range',
@@ -696,7 +696,7 @@ const testParameters = [
 
                 correspondingValue: '15',
                 referenceColor: {
-                hex: '#c5b8b8',
+                hex: '#e6dbda',
                     originalHex: '#f3e4e5'
                 },
                 interpretation: 'Moderate Range',
@@ -707,7 +707,7 @@ const testParameters = [
 
                 correspondingValue: '20',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#d5bcc2'
                 },
                 interpretation: 'Low Range',
                 range: 'Outside of Range',
@@ -717,7 +717,7 @@ const testParameters = [
 
                 correspondingValue: '25',
                 referenceColor: {
-                hex: '#bd99aa',
+                hex: '#c39db2',
                     originalHex: '#dfb9cd'
                 },
                 interpretation: 'Lower Range',
@@ -728,7 +728,7 @@ const testParameters = [
 
                 correspondingValue: '>40',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#b18eaf'
                 },
                 interpretation: 'Lowest Range',
                 range: 'Outside of Range',
@@ -746,7 +746,7 @@ const testParameters = [
 
                 correspondingValue: '10',
                 referenceColor: {
-                    hex: '#afb6b3',
+                    hex: '#c8d3d3',
                     originalHex: '#e1f1eb'
                 },
                 interpretation: 'Normal Range',
@@ -757,7 +757,7 @@ const testParameters = [
 
                 correspondingValue: '30',
                 referenceColor: {
-                hex: '#a5b3b6',
+                hex: '#bacdd3',
                     originalHex: '#d1ecea'
                 },
                 interpretation: 'Excessive Range',
@@ -768,7 +768,7 @@ const testParameters = [
 
                 correspondingValue: '80',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#93b7c4'
                 },
                 interpretation: 'Excessive Range',
                 range: 'Outside of Range',
@@ -778,7 +778,7 @@ const testParameters = [
 
                 correspondingValue: '150',
                 referenceColor: {
-                hex: '#84adb4',
+                hex: '#80b1be',
                     originalHex: '#a0dbe7'
                 },
                 interpretation: 'Extreme Range',
@@ -796,7 +796,7 @@ const testParameters = [
             {
                 correspondingValue: 'Neg',
                 referenceColor: {
-                    hex: '#c1bba7',
+                    hex: '#e1d9c4',
                     originalHex: '#fffde7',
                 },
                 interpretation: 'Normal Range',
@@ -806,7 +806,7 @@ const testParameters = [
             {
                 correspondingValue: 'Positive (light pink)',
                 referenceColor: {
-                    hex: '#fee7dc',
+                    hex: '#decfc6',
                     originalHex: '#fee7dc',
                 },
                 interpretation: 'Moderate (Positive) Range',
@@ -814,9 +814,19 @@ const testParameters = [
                 clarification: {},
             },
             {
+                correspondingValue: 'Any Degree of Uniform Pink Color',
+                referenceColor: {
+                    hex: '#d5c5c5',
+                    originalHex: '#fde4e7',
+                },
+                interpretation: 'Excessive (Positive) Range',
+                range: 'Outside of Range',
+                clarification: {},
+            },
+            {
                 correspondingValue: 'Positive (dark pink)',
                 referenceColor: {
-                    hex: '#fcdee1',
+                    hex: '#000000',
                     originalHex: '#fcdee1',
                 },
                 interpretation: 'Extreme (Positive) Range',
@@ -835,7 +845,7 @@ const testParameters = [
 
                 correspondingValue: '5',
                 referenceColor: {
-                    hex: '#bc9b4e',
+                    hex: '#dbab33',
                     originalHex: '#f3d15e'
                 },
                 interpretation: 'Acidic Range',
@@ -846,7 +856,7 @@ const testParameters = [
 
                 correspondingValue: '6',
                 referenceColor: {
-                hex: '#907e15',
+                hex: '#9e950f',
                     originalHex: '#babc33'
                 },
                 interpretation: 'Slightly Acidic Range',
@@ -857,7 +867,7 @@ const testParameters = [
 
                 correspondingValue: '6.5',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#769318'
                 },
                 interpretation: 'Normal (Balanced) Range',
                 range: 'Within Range',
@@ -867,7 +877,7 @@ const testParameters = [
 
                 correspondingValue: '7',
                 referenceColor: {
-                hex: '#586e15',
+                hex: '#5f7e16',
                     originalHex: '#86a23f'
                 },
                 interpretation: 'Optimal Range',
@@ -878,7 +888,7 @@ const testParameters = [
 
                 correspondingValue: '7.5',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#57841c'
                 },
                 interpretation: 'Normal (Balanced) Range',
                 range: 'Within Range',
@@ -888,7 +898,7 @@ const testParameters = [
 
                 correspondingValue: '8',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#477a25'
                 },
                 interpretation: 'Mildly Alkaline Range',
                 range: 'Outside of Range',
@@ -898,7 +908,7 @@ const testParameters = [
 
                 correspondingValue: '8.5',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#185583'
                 },
                 interpretation: 'Above Alkaline Range',
                 range: 'Outside of Range',
@@ -916,7 +926,7 @@ const testParameters = [
 
                 correspondingValue: 'Neg.',
                 referenceColor: {
-                    hex: '#bea441',
+                    hex: '#dbb71e',
                     originalHex: '#fbe960'
                 },
                 interpretation: 'Normal Range',
@@ -927,7 +937,7 @@ const testParameters = [
 
                 correspondingValue: 'Trace',
                 referenceColor: {
-                hex: '#c0a425',
+                hex: '#dcba19',
                     originalHex: '#f7e761'
                 },
                 interpretation: 'Trace Range',
@@ -938,7 +948,7 @@ const testParameters = [
 
                 correspondingValue: '0.3',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#cbb218'
                 },
                 interpretation: 'Moderate Range',
                 range: 'Outside of Range',
@@ -948,7 +958,7 @@ const testParameters = [
 
                 correspondingValue: '1',
                 referenceColor: {
-                hex: '#8c9425',
+                hex: '#919f1b',
                     originalHex: '#c5d568'
                 },
                 interpretation: 'Excessive Range',
@@ -959,7 +969,7 @@ const testParameters = [
 
                 correspondingValue: '3',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#6ba159'
                 },
                 interpretation: 'Excessive Range',
                 range: 'Outside of Range',
@@ -969,7 +979,7 @@ const testParameters = [
 
                 correspondingValue: '20',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#559a5f'
                 },
                 interpretation: 'Extreme Range',
                 range: 'Outside of Range',
@@ -987,7 +997,7 @@ const testParameters = [
 
                 correspondingValue: '0',
                 referenceColor: {
-                    hex: '#925141',
+                    hex: '#a4401d',
                     originalHex: '#c2572e'
                 },
                 interpretation: 'Normal Range',
@@ -998,7 +1008,7 @@ const testParameters = [
 
                 correspondingValue: '100',
                 referenceColor: {
-                hex: '#974050',
+                hex: '#ad5b67',
                     originalHex: '#cb7d81'
                 },
                 interpretation: 'Slighty High Range',
@@ -1009,7 +1019,7 @@ const testParameters = [
 
                 correspondingValue: '200',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#b56f68'
                 },
                 interpretation: 'High Range',
                 range: 'Outside of Range',
@@ -1019,7 +1029,7 @@ const testParameters = [
 
                 correspondingValue: '300',
                 referenceColor: {
-                hex: '#ad7f7a',
+                hex: '#b98382',
                     originalHex: '#e1ada3'
                 },
                 interpretation: 'Higher Range',
@@ -1030,7 +1040,7 @@ const testParameters = [
 
                 correspondingValue: '400',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#d1b6ab'
                 },
                 interpretation: 'Excessive Range',
                 range: 'Outside of Range',
@@ -1040,7 +1050,7 @@ const testParameters = [
 
                 correspondingValue: '500',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#d5cbc1'
                 },
                 interpretation: 'Extreme Range',
                 range: 'Outside of Range',
@@ -1058,7 +1068,7 @@ const testParameters = [
 
                 correspondingValue: '1',
                 referenceColor: {
-                    hex: '#2f5a71',
+                    hex: '#0b5990',
                     originalHex: '#00879e'
                 },
                 interpretation: 'Low Diluted Range',
@@ -1069,7 +1079,7 @@ const testParameters = [
 
                 correspondingValue: '1.005',
                 referenceColor: {
-                hex: '#43622f',
+                hex: '#437525',
                     originalHex: '#6d945e'
                 },
                 interpretation: 'Diluted Range',
@@ -1080,7 +1090,7 @@ const testParameters = [
 
                 correspondingValue: '1.01',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#658a0a'
                 },
                 interpretation: 'Normal Range',
                 range: 'Outside of Range',
@@ -1090,7 +1100,7 @@ const testParameters = [
 
                 correspondingValue: '1.015',
                 referenceColor: {
-                hex: '#806917',
+                hex: '#8d7910',
                     originalHex: '#b2ae47'
                 },
                 interpretation: 'Ideal Range',
@@ -1101,7 +1111,7 @@ const testParameters = [
 
                 correspondingValue: '1.02',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#b19511'
                 },
                 interpretation: 'Normal to Slightly Concentrated Range',
                 range: 'Outside of Range',
@@ -1111,7 +1121,7 @@ const testParameters = [
 
                 correspondingValue: '1.025',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#c79514'
                 },
                 interpretation: 'Concentrated Range',
                 range: 'Outside of Range',
@@ -1121,7 +1131,7 @@ const testParameters = [
 
                 correspondingValue: '1.03',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#be850d'
                 },
                 interpretation: 'Very Concentrated Range',
                 range: 'Outside of Range',
@@ -1139,7 +1149,7 @@ const testParameters = [
 
                 correspondingValue: '20',
                 referenceColor: {
-                    hex: '#aeab96',
+                    hex: '#bdbfab',
                     originalHex: '#eceed2'
                 },
                 interpretation: 'Normal Range',
@@ -1150,7 +1160,7 @@ const testParameters = [
 
                 correspondingValue: '50',
                 referenceColor: {
-                hex: '#9e978d',
+                hex: '#aeafa6',
                     originalHex: '#dddfcc'
                 },
                 interpretation: 'Elevated Range',
@@ -1161,7 +1171,7 @@ const testParameters = [
 
                 correspondingValue: '100',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#a6a7a3'
                 },
                 interpretation: 'Medium-high Range',
                 range: 'Outside of Range',
@@ -1171,7 +1181,7 @@ const testParameters = [
 
                 correspondingValue: '300',
                 referenceColor: {
-                hex: '#808188',
+                hex: '#838c9d',
                     originalHex: '#bbc1c1'
                 },
                 interpretation: 'High Range',
@@ -1182,7 +1192,7 @@ const testParameters = [
 
                 correspondingValue: '700',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#8086a3'
                 },
                 interpretation: 'Upper End of High Range',
                 range: 'Outside of Range',
@@ -1192,7 +1202,7 @@ const testParameters = [
 
                 correspondingValue: '1100',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#6a7ba1'
                 },
                 interpretation: 'Significantly High Range',
                 range: 'Outside of Range',
@@ -1202,7 +1212,7 @@ const testParameters = [
 
                 correspondingValue: '1500',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#566592'
                 },
                 interpretation: 'Exceptionally High Range',
                 range: 'Outside of Range',
@@ -1220,7 +1230,7 @@ const testParameters = [
 
                 correspondingValue: '3.3',
                 referenceColor: {
-                    hex: '#b5a99a',
+                    hex: '#cabeb0',
                     originalHex: '#fff2d9'
                 },
                 interpretation: 'Normal Range',
@@ -1231,7 +1241,7 @@ const testParameters = [
 
                 correspondingValue: '16',
                 referenceColor: {
-                hex: '#ac8c82',
+                hex: '#bea09a',
                     originalHex: '#fcccb9'
                 },
                 interpretation: 'Normal Range',
@@ -1242,7 +1252,7 @@ const testParameters = [
 
                 correspondingValue: '33',
                 referenceColor: {
-                hex: '#000000',
+                hex: '#b57b78',
                     originalHex: '#f9aea0'
                 },
                 interpretation: 'Considered Excessive Range',
@@ -1253,7 +1263,7 @@ const testParameters = [
 
                 correspondingValue: '66',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#b57373'
                 },
                 interpretation: 'Considered Excessive Range',
                 range: 'Outside of Range',
@@ -1263,7 +1273,7 @@ const testParameters = [
 
                 correspondingValue: '131',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#bb6c5d'
                 },
                 interpretation: 'Considered Extreme Range',
                 range: 'Outside of Range',
@@ -1281,7 +1291,7 @@ const testParameters = [
 
                 correspondingValue: '0',
                 referenceColor: {
-                    hex: '#ab7e90',
+                    hex: '#bf87a2',
                     originalHex: '#f7b7cc'
                 },
                 interpretation: 'Normal (Negative) Range',
@@ -1292,7 +1302,7 @@ const testParameters = [
 
                 correspondingValue: '0.5',
                 referenceColor: {
-                hex: '#a56e8f',
+                hex: '#b985a3',
                     originalHex: '#eab3cc'
                 },
                 interpretation: 'Standard Range',
@@ -1303,7 +1313,7 @@ const testParameters = [
 
                 correspondingValue: '1',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#af7a9c'
                 },
                 interpretation: 'High End of Standard Range',
                 range: 'Within Range',
@@ -1313,7 +1323,7 @@ const testParameters = [
 
                 correspondingValue: '2',
                 referenceColor: {
-                hex: '#91768d',
+                hex: '#a07d9c',
                     originalHex: '#d4bed6'
                 },
                 interpretation: 'Excessive Range',
@@ -1324,7 +1334,7 @@ const testParameters = [
 
                 correspondingValue: '5',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#8d9cbb'
                 },
                 interpretation: 'Elevated Range',
                 range: 'Outside of Range',
@@ -1334,7 +1344,7 @@ const testParameters = [
 
                 correspondingValue: '10',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#7f9aba'
                 },
                 interpretation: 'Highly Elevated Range',
                 range: 'Outside of Range',
@@ -1344,7 +1354,7 @@ const testParameters = [
 
                 correspondingValue: '25',
                 referenceColor: {
-                    hex: '#000000'
+                    hex: '#4f90b1'
                 },
                 interpretation: 'Extreme Range',
                 range: 'Outside of Range',
@@ -1356,56 +1366,56 @@ const testParameters = [
 ]; // all parameters
 
 const testsConfig = {
-    // "20-n-1": {
-    //     duration: 60,
-    //     overlayImage: {
-    //         url: './resources/height_blank.png',
-    //         width: 185,
-    //         height: 1059,
-    //     },
-    //     parameters: {
-    //         'Ascorbate': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'BHB': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Bilirubin': { locationOnOverlay: { center: { y: 210, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Blood': { locationOnOverlay: { center: { y: 290, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Calcium': { locationOnOverlay: { center: { y: 370, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Creatinine': { locationOnOverlay: { center: { y: 455, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Free Radical': { locationOnOverlay: { center: { y: 540, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Glucose': { locationOnOverlay: { center: { y: 630, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Ketone': { locationOnOverlay: { center: { y: 725, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Leukocytes': { locationOnOverlay: { center: { y: 820, x: 35 }, samplingOffsetRadius: 15 } },
-    //         'Magnesium': { locationOnOverlay: { center: { y: 55, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'Micro Albumin': { locationOnOverlay: { center: { y: 135, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'Nitrities': { locationOnOverlay: { center: { y: 210, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'pH': { locationOnOverlay: { center: { y: 290, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'Protein': { locationOnOverlay: { center: { y: 370, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'Sodium (Salinity)': { locationOnOverlay: { center: { y: 455, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'Specific Gravity': { locationOnOverlay: { center: { y: 540, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'Uric Acid': { locationOnOverlay: { center: { y: 630, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'Urobilinogen': { locationOnOverlay: { center: { y: 725, x: 145 }, samplingOffsetRadius: 15 } },
-    //         'Zinc': { locationOnOverlay: { center: { y: 820, x: 145 }, samplingOffsetRadius: 15 } },
-    //     }
-    // },
-    "14-n-1": {
+    "20-n-1": {
         duration: 60,
-        overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },
+        overlayImage: {
+            url: './resources/height_blank.png',
+            width: 185,
+            height: 1059,
+        },
         parameters: {
             'Ascorbate': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
             'BHB': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
             'Bilirubin': { locationOnOverlay: { center: { y: 210, x: 35 }, samplingOffsetRadius: 15 } },
-            'Free Radical': { locationOnOverlay: { center: { y: 290, x: 35 }, samplingOffsetRadius: 15 } },
-            'pH': { locationOnOverlay: { center: { y: 370, x: 35 }, samplingOffsetRadius: 15 } },
-            'Protein': { locationOnOverlay: { center: { y: 455, x: 35 }, samplingOffsetRadius: 15 } },
-            'Ketone': { locationOnOverlay: { center: { y: 540, x: 35 }, samplingOffsetRadius: 15 } },
-            'Leukocytes': { locationOnOverlay: { center: { y: 630, x: 35 }, samplingOffsetRadius: 15 } },
-            'Magnesium': { locationOnOverlay: { center: { y: 725, x: 35 }, samplingOffsetRadius: 15 } },
-            'Micro Albumin': { locationOnOverlay: { center: { y: 55, x: 145 }, samplingOffsetRadius: 15 } },
-            'Nitrities': { locationOnOverlay: { center: { y: 135, x: 145 }, samplingOffsetRadius: 15 } },
-            'Sodium (Salinity)': { locationOnOverlay: { center: { y: 210, x: 145 }, samplingOffsetRadius: 15 } },
-            'Uric Acid': { locationOnOverlay: { center: { y: 290, x: 145 }, samplingOffsetRadius: 15 } },
-            'Urobilinogen': { locationOnOverlay: { center: { y: 370, x: 145 }, samplingOffsetRadius: 15 } },
+            'Blood': { locationOnOverlay: { center: { y: 290, x: 35 }, samplingOffsetRadius: 15 } },
+            'Calcium': { locationOnOverlay: { center: { y: 370, x: 35 }, samplingOffsetRadius: 15 } },
+            'Creatinine': { locationOnOverlay: { center: { y: 455, x: 35 }, samplingOffsetRadius: 15 } },
+            'Free Radical': { locationOnOverlay: { center: { y: 540, x: 35 }, samplingOffsetRadius: 15 } },
+            'Glucose': { locationOnOverlay: { center: { y: 630, x: 35 }, samplingOffsetRadius: 15 } },
+            'Ketone': { locationOnOverlay: { center: { y: 725, x: 35 }, samplingOffsetRadius: 15 } },
+            'Leukocytes': { locationOnOverlay: { center: { y: 820, x: 35 }, samplingOffsetRadius: 15 } },
+            'Magnesium': { locationOnOverlay: { center: { y: 55, x: 145 }, samplingOffsetRadius: 15 } },
+            'Micro Albumin': { locationOnOverlay: { center: { y: 135, x: 145 }, samplingOffsetRadius: 15 } },
+            'Nitrities': { locationOnOverlay: { center: { y: 210, x: 145 }, samplingOffsetRadius: 15 } },
+            'pH': { locationOnOverlay: { center: { y: 290, x: 145 }, samplingOffsetRadius: 15 } },
+            'Protein': { locationOnOverlay: { center: { y: 370, x: 145 }, samplingOffsetRadius: 15 } },
+            'Sodium (Salinity)': { locationOnOverlay: { center: { y: 455, x: 145 }, samplingOffsetRadius: 15 } },
+            'Specific Gravity': { locationOnOverlay: { center: { y: 540, x: 145 }, samplingOffsetRadius: 15 } },
+            'Uric Acid': { locationOnOverlay: { center: { y: 630, x: 145 }, samplingOffsetRadius: 15 } },
+            'Urobilinogen': { locationOnOverlay: { center: { y: 725, x: 145 }, samplingOffsetRadius: 15 } },
+            'Zinc': { locationOnOverlay: { center: { y: 820, x: 145 }, samplingOffsetRadius: 15 } },
         }
     },
+    // "14-n-1": {
+    //     duration: 60,
+    //     overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },
+    //     parameters: {
+    //         'Ascorbate': { locationOnOverlay: { center: { y: 55, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'BHB': { locationOnOverlay: { center: { y: 135, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Bilirubin': { locationOnOverlay: { center: { y: 210, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Free Radical': { locationOnOverlay: { center: { y: 290, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'pH': { locationOnOverlay: { center: { y: 370, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Protein': { locationOnOverlay: { center: { y: 455, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Ketone': { locationOnOverlay: { center: { y: 540, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Leukocytes': { locationOnOverlay: { center: { y: 630, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Magnesium': { locationOnOverlay: { center: { y: 725, x: 35 }, samplingOffsetRadius: 15 } },
+    //         'Micro Albumin': { locationOnOverlay: { center: { y: 55, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Nitrities': { locationOnOverlay: { center: { y: 135, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Sodium (Salinity)': { locationOnOverlay: { center: { y: 210, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Uric Acid': { locationOnOverlay: { center: { y: 290, x: 145 }, samplingOffsetRadius: 15 } },
+    //         'Urobilinogen': { locationOnOverlay: { center: { y: 370, x: 145 }, samplingOffsetRadius: 15 } },
+    //     }
+    // },
     // "12-n-1": {
     //     duration: 60,
     //     overlayImage: { url: './resources/height_blank.png', width: 185, height: 1059 },

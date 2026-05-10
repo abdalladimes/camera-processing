@@ -1,6 +1,8 @@
 import buildfire from 'buildfire';
 import navigationService from '../services/navigation.service';
 
+let _listener = null;
+
 const config = {
     datastoreTag: 'config',
     countdownInterval: null,
@@ -34,11 +36,11 @@ function init(options) {
     } else {
         elements.testName.innerText = 'Test Title';
     }
-    buildfire.datastore.onUpdate((event) => {
+    _listener = buildfire.datastore.onUpdate((event) => {
         console.log('Data has been updated ', event);
         if (event && event.tag === config.datastoreTag) {
             const newContent = event.data?.timer || '';
-            elements.timerWysiwyg.innerHTML = newContent;
+            if (elements.timerWysiwyg) elements.timerWysiwyg.innerHTML = newContent;
         }
     });
 
@@ -62,6 +64,10 @@ function init(options) {
 function destroy() {
     if (config.countdownInterval) {
         clearInterval(config.countdownInterval);
+    }
+    if (_listener) {
+        _listener.clear();
+        _listener = null;
     }
 }
 
