@@ -69,6 +69,7 @@ function pop(options, callback) {
     }
     historyStack.pop();
     if (!options.skipPop) {
+        _isPopping = true;
         buildfire.history.pop();
     }
     const previous = historyStack[historyStack.length - 1];
@@ -92,6 +93,7 @@ function pop(options, callback) {
 }
 
 let _isNavigatingHome = false;
+let _isPopping = false;
 
 function goHome() {
     if (historyStack.length <= 1 && historyStack[0]?.template === 'home') return;
@@ -115,6 +117,10 @@ function goHome() {
 
 function onPopHandler() {
     if (_isNavigatingHome) return;
+    if (_isPopping) {
+        _isPopping = false;
+        return;
+    }
     const current = historyStack[historyStack.length - 1];
     if (current) {
         if (current.view && current.view.destroy) {

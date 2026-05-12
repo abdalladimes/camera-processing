@@ -112,7 +112,27 @@ const WebpackConfig = {
             template: path.join(__dirname, '../src/widget/templates/history.html'),
             chunks: ['devServer']
         }),
-
+        new HtmlWebpackPlugin({
+            filename: 'widget/templates/historyList.html',
+            inject: true,
+            minify: { removeComments: true, collapseWhitespace: true },
+            template: path.join(__dirname, '../src/widget/templates/historyList.html'),
+            chunks: ['devServer']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'widget/templates/historyDetail.html',
+            inject: true,
+            minify: { removeComments: true, collapseWhitespace: true },
+            template: path.join(__dirname, '../src/widget/templates/historyDetail.html'),
+            chunks: ['devServer']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'widget/templates/addNotes.html',
+            inject: true,
+            minify: { removeComments: true, collapseWhitespace: true },
+            template: path.join(__dirname, '../src/widget/templates/addNotes.html'),
+            chunks: ['devServer']
+        }),
         new HtmlWebpackPlugin({
             filename: 'widget/templates/analyze.html',
             inject: true,

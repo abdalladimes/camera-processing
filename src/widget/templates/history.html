@@ -1,3 +1,16 @@
 <template>
-    <div id="historyListView"></div>
+    <div id="historySlider"></div>
+    <div class="history-page">
+        <div class="history-page__tabs">
+            <button class="history-page__tab" data-range="day">Day</button>
+            <button class="history-page__tab" data-range="week">Week</button>
+            <button class="history-page__tab history-page__tab--active" data-range="month">Month</button>
+            <button class="history-page__tab" data-range="year">Year</button>
+        </div>
+        <div class="history-page__chart">
+            <h3 class="history-page__chart-title"></h3>
+            <canvas id="historyChart"></canvas>
+        </div>
+        <div class="history-page__description"></div>
+    </div>
 </template>

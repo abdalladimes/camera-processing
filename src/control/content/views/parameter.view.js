@@ -46,48 +46,62 @@ function init(options) {
         });
     }
 
-    const allSelectors = ['#wysiwygContent', ...rangeEditors.map(r => `#${r.id}`)].join(',');
     let readyCount = 0;
     const totalEditors = 1 + rangeEditors.length;
 
-    tinymce.init({
-        selector: allSelectors,
-        setup: (editor) => {
-            editor.on('init', () => {
-                readyCount++;
-                if (readyCount < totalEditors) return;
+    function onAllEditorsReady() {
+        testsConfigService.get({ parameter: parameterData }, (err, result) => {
+            buildfire.spinner.hide();
+            if (err) {
+                console.error('Error fetching data', err);
+                loaded = true;
+                return;
+            }
+            if (result && result.data) {
+                const saved = result.data;
+                if (saved.imageUrl) {
+                    parameterData.imageUrl = saved.imageUrl;
+                    const img = document.getElementById('parameterImage');
+                    img.src = saved.imageUrl;
+                    img.style.display = 'block';
+                    document.getElementById('addIcon').style.display = 'none';
+                }
 
-                testsConfigService.get({ parameter: parameterData }, (err, result) => {
-                    buildfire.spinner.hide();
-                    if (err) {
-                        console.error('Error fetching data', err);
-                        loaded = true;
-                        return;
-                    }
-                    if (result && result.data) {
-                        const saved = result.data;
-                        if (saved.imageUrl) {
-                            parameterData.imageUrl = saved.imageUrl;
-                            const img = document.getElementById('parameterImage');
-                            img.src = saved.imageUrl;
-                            img.style.display = 'block';
-                            document.getElementById('addIcon').style.display = 'none';
-                        }
+                const mainEditor = tinymce.get('wysiwygContent');
+                if (mainEditor) mainEditor.setContent(saved.info || '');
 
-                        const mainEditor = tinymce.get('wysiwygContent');
-                        if (mainEditor) mainEditor.setContent(saved.info || '');
-
-                        const savedRanges = saved.valueRanges || [];
-                        rangeEditors.forEach(({ id, correspondingValue }) => {
-                            const match = savedRanges.find(r => r.correspondingValue === correspondingValue);
-                            const rangeEditor = tinymce.get(id);
-                            if (rangeEditor && match) rangeEditor.setContent(match.info || '');
-                        });
-                    }
-                    loaded = true;
+                const savedRanges = saved.valueRanges || [];
+                rangeEditors.forEach(({ id, correspondingValue }) => {
+                    const match = savedRanges.find(r => r.correspondingValue === correspondingValue);
+                    const rangeEditor = tinymce.get(id);
+                    if (rangeEditor && match) rangeEditor.setContent(match.info || '');
                 });
-            });
+            }
+            loaded = true;
+        });
+    }
+
+    function onEditorReady() {
+        readyCount++;
+        if (readyCount >= totalEditors) onAllEditorsReady();
+    }
+
+    // Initialize main editor
+    tinymce.init({
+        selector: '#wysiwygContent',
+        setup: (editor) => {
+            editor.on('init', onEditorReady);
         }
+    });
+
+    // Initialize each range editor separately
+    rangeEditors.forEach(({ id }) => {
+        tinymce.init({
+            selector: `#${id}`,
+            setup: (editor) => {
+                editor.on('init', onEditorReady);
+            }
+        });
     });
 
     document.getElementById('saveBtn').addEventListener('click', () => {

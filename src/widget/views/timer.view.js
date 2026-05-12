@@ -53,6 +53,10 @@ function init(options) {
     });
 
     elements.skipTimerButton.addEventListener('click', () => {
+        if (buildfire.isWeb()) {
+            buildfire.dialog.alert({ title: 'Camera Is Not Available', message: 'Camera is not available on web.' });
+            return;
+        }
         if (config.countdownInterval) {
             clearInterval(config.countdownInterval);
         }

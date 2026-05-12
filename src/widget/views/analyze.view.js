@@ -1,5 +1,7 @@
 import testsConfigService from '../services/testsConfig.service';
 import navigationService from '../services/navigation.service';
+import resultsHistoryService from '../services/resultsHistory.service';
+import resultsService from '../services/results.service';
 
 // ═══════════════════════════════════════════════════════════════
 // Toggle this to enable auto-capture with frame validation
@@ -15,6 +17,8 @@ let state = {
     testName: null,
     overlayImage: {},
     parameters: {},
+    lastResults: null,
+    lastHistoryEntry: null,
     selectors: {
         detectionFailedContainer: '#detectionFailedContainer',
         analyzingContainer: '#analyzingContainer',
@@ -27,6 +31,7 @@ let _isProcessing = false;
 let _lastValidation = null;
 let _frameAccepted = false;
 let _captureTimeout = null;
+let _hasResults = false;
 const CAPTURE_TIMEOUT_MS = 10000;
 
 function init(options) {
@@ -44,7 +49,12 @@ function init(options) {
         elements[selectorKey] = document.querySelector(selector);
     });
 
-    startCameraCapture();
+    if (!_hasResults) {
+        startCameraCapture();
+    } else {
+        showResults();
+        resultsService.renderResults(state.lastResults, state.parameters, { showAddNotes: true, historyEntry: state.lastHistoryEntry });
+    }
 
     document.getElementById('retryButton').addEventListener('click', () => {
         if (USE_AUTO_CAPTURE) {
@@ -156,7 +166,6 @@ function getTestParameters(test) {
 }
 
 function getImageFromCamera(options, callback) {
-    console.error(new URL(options.overlayImageUrl, window.location.href).href);
     buildfire.services.camera.getPicture({ overlayImageUrl: new URL(options.overlayImageUrl, window.location.href).href, destinationType: 0, quality: 100 }, callback);
 }
 
@@ -198,15 +207,18 @@ function processCameraImage(imageSrc, imageAsData) {
         }
 
         showResults();
+        _hasResults = true;
         testResultsDiv.innerHTML = JSON.stringify(lightingResults, null, 2);
 
         document.getElementById('isBlurry').innerHTML = '(Sharp)';
         const extractedColors = getParameterColorsFromImage(imgElement);
         drawSamplingPoints(imgElement);
         const results = getResultsFromExtractedColors(extractedColors, state.parameters);
+        state.lastResults = results;
         document.getElementById('extractedColors').innerHTML = JSON.stringify(extractedColors, null, 2);
         document.getElementById('results').innerHTML = JSON.stringify(results, null, 2);
-        renderReadableResults(results, state.parameters);
+        resultsService.renderResults(results, state.parameters, { showAddNotes: true, historyEntry: state.lastHistoryEntry });
+        saveResultsToHistory(results);
     };
     if (imageAsData) {
         imgElement.src = `data:image/png;base64,${imageSrc}`;
@@ -608,69 +620,26 @@ function calculateDeltaE(lab1, lab2) {
     return Math.sqrt((deltaL * deltaL) + (deltaA * deltaA) + (deltaB * deltaB));
 }
 
-function renderReadableResults(results, parameters) {
-    var container = document.getElementById('readableResults');
-    container.innerHTML = '<h2 class="results-list__title">Urine Data</h2>';
-    for (var name in results) {
-        var r = results[name];
-        var range = r.range || 'Unknown';
-        var rangeColor = '#f5a623';
-        if (range === 'Within Range') rangeColor = '#4caf50';
-        else if (range === 'Outside of Range') rangeColor = '#e53935';
-        else if (range === 'Below Range') rangeColor = '#f5a623';
-
-        var card = document.createElement('div');
-        card.className = 'result-card';
-        card.innerHTML =
-            '<div class="result-card__row">' +
-                '<div class="result-card__name-row">' +
-                    '<img class="result-card__icon" src="resources/drop.png" alt="">' +
-                    '<span class="result-card__name">' + name + '</span>' +
-                '</div>' +
-                '<span class="result-card__link">View History</span>' +
-            '</div>' +
-            '<div class="result-card__range" style="color:' + rangeColor + '">' + range + '</div>' +
-            '<div class="result-card__clarification"></div>' +
-            '<div class="result-card__see-more">' +
-                '<span class="result-card__link result-card__toggle" data-param="' + name + '" data-value="' + r.value + '">See More</span>' +
-            '</div>';
-        container.appendChild(card);
-    }
-
-    var addNotesBtn = document.createElement('div');
-    addNotesBtn.className = 'results-list__add-notes';
-    addNotesBtn.innerHTML = '<button class="mdc-button mdc-button--raised results-list__add-notes-btn">Add Notes</button>';
-    container.appendChild(addNotesBtn);
-
-    container.addEventListener('click', function(e) {
-        var toggle = e.target.closest('.result-card__toggle');
-        if (!toggle) return;
-
-        var card = toggle.closest('.result-card');
-        var clarificationEl = card.querySelector('.result-card__clarification');
-        var isOpen = toggle.textContent === 'See Less';
-
-        if (isOpen) {
-            clarificationEl.innerHTML = '';
-            clarificationEl.classList.remove('active');
-            toggle.textContent = 'See More';
-            return;
-        }
-
-        var paramName = toggle.dataset.param;
-        var paramValue = toggle.dataset.value;
-
-        testsConfigService.getDatastoreParameter({ parameter: { name: paramName } }, function(err, result) {
-            var text = '';
-            if (result && result.data) {
-                var matchedRange = (result.data.valueRanges || []).find(function(vr) {
-                    return vr.correspondingValue === paramValue;
-                });
-                text = (matchedRange && matchedRange.info) || result.data.info || '';
+function saveResultsToHistory(results) {
+    resultsHistoryService.getAll((err, data) => {
+        const existingResults = data?.results || [];
+        let maxCount = 0;
+        existingResults.forEach(r => {
+            const match = r.title && r.title.match(/^Test (\d+)$/);
+            if (match) {
+                const num = parseInt(match[1], 10);
+                if (num > maxCount) maxCount = num;
             }
-            clarificationEl.innerHTML = text || '<p>No additional information available.</p>';
-            clarificationEl.classList.add('active');
-            toggle.textContent = 'See Less';
+        });
+        const entry = {
+            title: 'Test ' + (maxCount + 1),
+            description: '',
+            parameters: results,
+            createdOn: new Date().toISOString(),
+        };
+        resultsHistoryService.save(entry, (err) => {
+            if (err) console.error('Error saving results to history', err);
+            else state.lastHistoryEntry = entry;
         });
     });
 }
@@ -680,6 +649,9 @@ function destroy() {
         clearTimeout(_captureTimeout);
         _captureTimeout = null;
     }
+    _hasResults = false;
+    state.lastResults = null;
+    state.lastHistoryEntry = null;
 }
 
 export default { init, destroy, validateFrame }

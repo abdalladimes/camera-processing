@@ -1,0 +1,24 @@
+<template>
+    <div class="add-notes-page">
+        <h2 class="add-notes-page__title">Add Note</h2>
+        <div class="add-notes-page__form">
+            <div class="mdc-text-field mdc-text-field--filled add-notes-page__field">
+                <span class="mdc-text-field__ripple"></span>
+                <span class="mdc-floating-label" id="noteTitleLabel">Title</span>
+                <input type="text" id="noteTitle" class="mdc-text-field__input" aria-labelledby="noteTitleLabel" />
+                <span class="mdc-line-ripple"></span>
+            </div>
+            <div class="mdc-text-field mdc-text-field--filled mdc-text-field--textarea add-notes-page__field">
+                <span class="mdc-text-field__ripple"></span>
+                <span class="mdc-floating-label" id="noteContentLabel">Description</span>
+                <textarea id="noteContent" class="mdc-text-field__input" rows="4" aria-labelledby="noteContentLabel"></textarea>
+                <span class="mdc-line-ripple"></span>
+            </div>
+        </div>
+        <div class="add-notes-page__actions">
+            <button id="addNoteBtn" class="mdc-button mdc-button--raised add-notes-page__btn">
+                <span class="mdc-button__label">Add</span>
+            </button>
+        </div>
+    </div>
+</template>

@@ -1,6 +1,5 @@
 import navigationService from '../services/navigation.service';
-import testsConfigService from '../services/testsConfig.service';
-import historyService from '../services/history.service';
+import resultsHistoryService from '../services/resultsHistory.service';
 
 let _listener = null;
 
@@ -23,13 +22,15 @@ function init() {
     });
 
 
-    historyService.getHistory((error, value) => {
+    resultsHistoryService.getAll((error, data) => {
         if (error) {
             console.error('Error fetching tests history from localStorage', error);
             elements.historyBtn.style.display = 'none';
             return;
         }
-        // elements.historyBtn.style.display = value && value.length > 0 ? 'block' : 'none';
+        const hasHistory = data?.results?.length > 0;
+        elements.historyBtn.style.display = hasHistory ? 'block' : 'none';
+        document.getElementById('actionButtonsContainer').classList.toggle('action-buttons--stacked', hasHistory);
     });
 
 
@@ -54,7 +55,7 @@ function init() {
         navigationService.push({ template: 'selectTest' });
     });
     elements.historyBtn.addEventListener('click', () => {
-        navigationService.push({ template: 'history' }, (err) => { });
+        navigationService.push({ template: 'historyList' });
     });
 }
 
